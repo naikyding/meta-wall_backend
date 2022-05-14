@@ -1,9 +1,19 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express')
+const { ApiError, apiCatch } = require('../utils/errorHandle')
+const router = express.Router()
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+router.get('/', apiCatch((req, res, next) => {
+  const { content } = req.body
 
-module.exports = router;
+  if (!content) {
+    next(ApiError.badRequest('缺少 content 欄位!!'))
+    return
+  }
+
+  res.status(200).send({
+    status: true
+  })
+}))
+
+module.exports = router
