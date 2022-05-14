@@ -23,4 +23,9 @@ app.use('/users', usersRouter)
 app.use((req, res) => res.status(404).send('Not Found'))
 app.use(errorHandle)
 
+process.on('unhandledRejection', (error) => {
+  console.log(111111111)
+  console.log(error)
+})
+
 module.exports = app

@@ -1,6 +1,7 @@
 const { errorResponse } = require('./responseHandle')
 
 const errorHandle = (error, req, res, next) => {
+  // 已知錯誤
   if (error instanceof ApiError) {
     errorResponse({
       res,
@@ -11,10 +12,12 @@ const errorHandle = (error, req, res, next) => {
     return false
   }
 
+  // 未知錯誤
   errorResponse({
     res,
     statusCode: 500,
     message: 'Something went wong!',
+    // 開發模式: 看到 error.stack
     error: process.env.NODE_ENV === 'dev'
       ? {
           name: error.name,
@@ -38,12 +41,6 @@ class ApiError {
     this.message = message
   }
 
-  /**
-   * 錯誤的請求 400
-   * @date 2022-05-14
-   * @param {string} message 錯誤信息
-   * @return {Constructor} 處理實例
-   */
   static badRequest (message) {
     return new ApiError(400, message)
   }
@@ -53,4 +50,13 @@ class ApiError {
   }
 }
 
-module.exports = { errorHandle, ApiError }
+const apiCatch = (fun) =>
+  (req, res, next) => {
+    try {
+      fun(req, res, next)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+module.exports = { errorHandle, ApiError, apiCatch }
