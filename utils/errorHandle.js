@@ -1,3 +1,5 @@
+const errorGeneralMessage = require('./errorMessage')
+const validationHandle = require('./modelValidationHandle')
 const { errorResponse } = require('./responseHandle')
 
 /**
@@ -9,15 +11,32 @@ const { errorResponse } = require('./responseHandle')
  * @param {Object} next 下一層
  */
 const errorHandle = (error, req, res, next) => {
-  // 已知錯誤
+  // 已定義過錯誤
   if (error instanceof ApiError) {
-    errorResponse({
+    return errorResponse({
       res,
       statusCode: error.statusCode,
       message: error.message
     })
+  }
 
-    return false
+  // 已知錯誤
+  if (error.message in errorGeneralMessage) {
+    return errorResponse({
+      res,
+      statusCode: error.statusCode,
+      message: errorGeneralMessage[error.message]
+    })
+  }
+
+  // mongoose 驗證錯誤處理
+  if (error.name === 'ValidationError') {
+    return errorResponse({
+      res,
+      statusCode: 422,
+      message: '資料發生錯誤',
+      errors: validationHandle(error.errors)
+    })
   }
 
   // 未知錯誤
@@ -64,9 +83,9 @@ class ApiError {
  * @param {function} fun 函式
  */
 const apiCatch = (fun) =>
-  (req, res, next) => {
+  async (req, res, next) => {
     try {
-      fun(req, res, next)
+      await fun(req, res, next)
     } catch (error) {
       next(error)
     }
