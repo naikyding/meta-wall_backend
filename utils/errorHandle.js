@@ -41,12 +41,12 @@ class ApiError {
     this.message = message
   }
 
-  static badRequest (message) {
-    return new ApiError(400, message)
+  static badRequest (statusCode = 400, message) {
+    return new ApiError(statusCode, message)
   }
 
-  static internalError (message) {
-    return new ApiError(500, message)
+  static internalError (statusCode = 500, message) {
+    return new ApiError(statusCode, message)
   }
 }
 
