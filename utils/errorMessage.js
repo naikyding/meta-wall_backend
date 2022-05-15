@@ -5,7 +5,8 @@ const errorGeneralMessage = {
   'jwt malformed': 'Token 格式錯誤',
   'jwt expired': 'Token 過期',
   'invalid token': 'Token 無效',
-  'Unexpected end of JSON input': '輸入格式有誤!'
+  'Unexpected end of JSON input': '輸入格式有誤!',
+  SyntaxError: '輸入格式錯誤!'
 }
 
 module.exports = errorGeneralMessage

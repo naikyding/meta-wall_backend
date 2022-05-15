@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { isAuth } = require('../utils/auth')
 const { apiCatch } = require('../utils/errorHandle')
-const { checkToken, register } = require('../controller/user')
+const { checkToken, register, login } = require('../controller/user')
 
 const router = Router()
 
@@ -10,5 +10,8 @@ router.get('/check_token', isAuth, apiCatch(checkToken))
 
 // 註冊
 router.post('/register', apiCatch(register))
+
+// 登入
+router.post('/login', apiCatch(login))
 
 module.exports = router

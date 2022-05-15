@@ -21,11 +21,13 @@ const errorHandle = (error, req, res, next) => {
   }
 
   // 已知錯誤
-  if (error.message in errorGeneralMessage) {
+  if (error.message in errorGeneralMessage || error.name in errorGeneralMessage) {
     return errorResponse({
       res,
       statusCode: error.statusCode,
-      message: errorGeneralMessage[error.message]
+      message: error.message in errorGeneralMessage
+        ? errorGeneralMessage[error.message]
+        : errorGeneralMessage[error.name]
     })
   }
 
@@ -39,6 +41,8 @@ const errorHandle = (error, req, res, next) => {
     })
   }
 
+  console.log(process.env.NODE_ENV)
+  if (process.env.NODE_ENV === 'dev') console.log(error)
   // 未知錯誤
   errorResponse({
     res,
