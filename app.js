@@ -7,6 +7,9 @@ require('dotenv').config()
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
+const metaWallConnect = require('./db/metaWall')
+
+metaWallConnect()
 
 const app = express()
 
@@ -24,8 +27,9 @@ app.use((req, res) => res.status(404).send('Not Found'))
 app.use(errorHandle)
 
 process.on('unhandledRejection', (error) => {
-  console.log(111111111)
+  console.log('--------------- unhandledRejection (start) -------------------')
   console.log(error)
+  console.log('--------------- unhandledRejection (end) -------------------')
 })
 
 module.exports = app
