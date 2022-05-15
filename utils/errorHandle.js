@@ -1,5 +1,13 @@
 const { errorResponse } = require('./responseHandle')
 
+/**
+ * 錯誤處理入口
+ * @date 2022-05-15
+ * @param {Object} error 錯誤物件
+ * @param {Object} req 請求物件
+ * @param {Object} res 響應物件
+ * @param {Object} next 下一層
+ */
 const errorHandle = (error, req, res, next) => {
   // 已知錯誤
   if (error instanceof ApiError) {
@@ -41,15 +49,20 @@ class ApiError {
     this.message = message
   }
 
-  static badRequest (message) {
-    return new ApiError(400, message)
+  static badRequest (statusCode = 400, message) {
+    return new ApiError(statusCode, message)
   }
 
-  static internalError (message) {
-    return new ApiError(500, message)
+  static internalError (statusCode = 500, message) {
+    return new ApiError(statusCode, message)
   }
 }
 
+/**
+ * Controller 操作邏輯 catch 整合方法
+ * @date 2022-05-15
+ * @param {function} fun 函式
+ */
 const apiCatch = (fun) =>
   (req, res, next) => {
     try {
