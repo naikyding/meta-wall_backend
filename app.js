@@ -4,10 +4,10 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const { errorHandle } = require('./utils/errorHandle')
 require('dotenv').config()
+const metaWallConnect = require('./db/metaWall')
 
 const indexRouter = require('./routes/index')
-const usersRouter = require('./routes/users')
-const metaWallConnect = require('./db/metaWall')
+const authRouter = require('./routes/auth')
 
 metaWallConnect()
 
@@ -20,7 +20,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
+app.use('/auth', authRouter)
 
 // Error Handle
 app.use((req, res) => res.status(404).send('Not Found'))

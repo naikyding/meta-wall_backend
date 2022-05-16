@@ -37,14 +37,14 @@ const errorResponse = ({
   status = false,
   statusCode = 400,
   message = '操作失敗',
-  error
+  errors
 }) => {
   res
     .status(statusCode)
     .send({
       status,
       message,
-      error
+      errors
     })
 }
 
