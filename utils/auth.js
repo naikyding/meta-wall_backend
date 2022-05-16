@@ -30,15 +30,15 @@ const verifyToken = (token) => JWT.verify(token, process.env.JWT_SECRET, (error,
  * @param {Object} res 響應 物件
  * @param {Object} next 下一層
  */
-const isAuth = async (req, res, next) => {
+const auth = async (req, res, next) => {
   const { authorization } = req.headers
-  if (!authorization || !authorization.startsWith('Bearer ')) { return next(ApiError.badRequest(undefined, '未授權')) }
+  if (!authorization || !authorization.startsWith('Bearer ')) { return next(ApiError.badRequest(undefined, '未授權，請輸入正確金鑰')) }
 
   const token = authorization.split(' ')[1]
   const { errors, user } = await verifyToken(token)
-  if (errors) return next(ApiError.badRequest(401, errorGeneralMessage[errors.message] || '驗證失敗!'))
+  if (errors) return next(ApiError.badRequest(401, errorGeneralMessage[errors.message] || '驗證失敗，請重新登入'))
   req.user = user
   next()
 }
 
-module.exports = { generatorToken, verifyToken, isAuth }
+module.exports = { generatorToken, verifyToken, auth }

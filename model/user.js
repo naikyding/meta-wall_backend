@@ -29,7 +29,10 @@ const userSchema = new Schema({
   },
   gender: {
     type: String,
-    enum: ['male', 'female']
+    enum: {
+      values: ['male', 'female'],
+      message: '性別設置，不符合規範。'
+    }
   },
   posts: {
     type: Array,

@@ -13,7 +13,8 @@ const register = async (req, res, next) => {
     nickname,
     email,
     password,
-    passwordConfirm
+    passwordConfirm,
+    gender
   } = req.body
 
   if (!(password === passwordConfirm)) return next(ApiError.badRequest(422, '輸入密碼不一致!'))
@@ -24,6 +25,7 @@ const register = async (req, res, next) => {
   const createdData = await User.create({
     nickname,
     email,
+    gender,
     password: bcrypt.hashSync(password, 12)
   })
   successResponse({
@@ -48,7 +50,7 @@ const login = async (req, res, next) => {
 
   const tokenType = 'Bearer '
   const token = generatorToken({
-    id: userData._id,
+    _id: userData._id,
     nickname: userData.nickname
   })
 
