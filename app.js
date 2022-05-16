@@ -5,11 +5,10 @@ const logger = require('morgan')
 const { errorHandle } = require('./utils/errorHandle')
 require('dotenv').config()
 const metaWallConnect = require('./db/metaWall')
+const cors = require('cors')
 
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
-
-metaWallConnect()
 
 const app = express()
 
@@ -18,6 +17,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(cors())
+
+metaWallConnect()
 
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
