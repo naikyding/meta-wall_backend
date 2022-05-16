@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { isAuth } = require('../utils/auth')
 const { apiCatch } = require('../utils/errorHandle')
-const { checkToken, register, login } = require('../controller/user')
+const { checkToken, register, login } = require('../controller/auth')
 
 const router = Router()
 

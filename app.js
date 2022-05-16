@@ -7,7 +7,7 @@ require('dotenv').config()
 const metaWallConnect = require('./db/metaWall')
 
 const indexRouter = require('./routes/index')
-const usersRouter = require('./routes/user')
+const authRouter = require('./routes/auth')
 
 metaWallConnect()
 
@@ -20,7 +20,7 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
-app.use('/user', usersRouter)
+app.use('/auth', authRouter)
 
 // Error Handle
 app.use((req, res) => res.status(404).send('Not Found'))
