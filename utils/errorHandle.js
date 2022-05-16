@@ -41,7 +41,6 @@ const errorHandle = (error, req, res, next) => {
     })
   }
 
-  console.log(process.env.NODE_ENV)
   if (process.env.NODE_ENV === 'dev') console.log(error)
   // 未知錯誤
   errorResponse({
