@@ -41,14 +41,19 @@ const errorHandle = (error, req, res, next) => {
     })
   }
 
-  if (process.env.NODE_ENV === 'dev') console.log(error)
+  if (process.env.NODE_ENV === 'dev') {
+    console.log('------------ catch DEV ERROR (start) ------------')
+    console.log(error)
+    console.log('------------ catch DEV ERROR (end) ------------')
+  }
+
   // 未知錯誤
   errorResponse({
     res,
     statusCode: 500,
     message: 'Something went wong!',
     // 開發模式: 看到 error.stack
-    error: process.env.NODE_ENV === 'dev'
+    errors: process.env.NODE_ENV === 'dev'
       ? {
           name: error.name,
           message: error.message,
