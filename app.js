@@ -9,6 +9,7 @@ const cors = require('cors')
 
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
+const userRouter = require('./routes/user')
 
 const app = express()
 
@@ -23,6 +24,7 @@ metaWallConnect()
 
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
+app.use('/user', userRouter)
 
 // Error Handle
 app.use((req, res) => res.status(404).send('Not Found'))
