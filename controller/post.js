@@ -6,7 +6,6 @@ const uploadImgToImgUr = require('../utils/uploadImg')
 const { verifyObjectId } = require('../utils/mongoose')
 
 const creatPost = async (req, res, next) => {
-  console.log('------- creatPost controller ---------')
   const post = {}
   const { content } = req.body
   const id = req.user._id
@@ -26,8 +25,6 @@ const creatPost = async (req, res, next) => {
   const { _id } = await Post.create(post)
   const { posts } = await User.findByIdAndUpdate(id, { $push: { posts: _id } }, { new: true }).select('posts')
   if (!posts.includes(_id)) return next(ApiError.badRequest(undefined, '新增失敗，請重試'))
-
-  console.log('------- creatPost controller ---------')
 
   successResponse({
     res,
