@@ -14,7 +14,7 @@ const creatPost = async (req, res, next) => {
   // 如果有上傳圖片
   const uploadFile = req.file
   if (uploadFile) {
-    const uploadImgBuffer = await uploadFile.buffer
+    const uploadImgBuffer = uploadFile.buffer
     const { data } = await uploadImgToImgUr(uploadImgBuffer)
     post.image = data.data.link
   }
@@ -26,11 +26,13 @@ const creatPost = async (req, res, next) => {
   const { posts } = await User.findByIdAndUpdate(id, { $push: { posts: _id } }, { new: true }).select('posts')
   if (!posts.includes(_id)) return next(ApiError.badRequest(undefined, '新增失敗，請重試'))
 
-  successResponse({
-    res,
-    message: '新增成功',
-    data: { postId: _id }
-  })
+  setTimeout(() => {
+    successResponse({
+      res,
+      message: '新增成功',
+      data: { postId: _id }
+    })
+  }, 1000)
 }
 
 const deletePost = async (req, res, next) => {
