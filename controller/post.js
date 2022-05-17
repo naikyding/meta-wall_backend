@@ -32,7 +32,7 @@ const creatPost = async (req, res, next) => {
       message: '新增成功',
       data: { postId: _id }
     })
-  }, 1000)
+  }, 300)
 }
 
 const deletePost = async (req, res, next) => {
