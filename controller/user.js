@@ -2,6 +2,7 @@ const { ApiError } = require('../utils/errorHandle')
 const User = require('../model/user')
 const { successResponse } = require('../utils/responseHandle')
 const uploadImgToImgUr = require('../utils/uploadImg')
+const bcrypt = require('bcryptjs')
 
 const userBaseInfo = async (req, res, next) => {
   const { _id, nickname } = req.user
@@ -40,4 +41,27 @@ const updateUserBaseInfo = async (req, res, next) => {
   })
 }
 
-module.exports = { userBaseInfo, updateUserBaseInfo }
+const updatePassword = async (req, res, next) => {
+  const { password, passwordConfirm } = req.body
+  const id = req.user._id
+
+  if (!password || !passwordConfirm) return next(ApiError.badRequest(undefined, '請完整填寫密碼'))
+  if (password !== passwordConfirm) return next(ApiError.badRequest(undefined, '輸入密碼不一致!'))
+  if (password.length < 8) return next(ApiError.badRequest(undefined, '密碼長度不得少於 8 碼'))
+
+  // 新密碼與舊密碼相同
+  const userDB = await User.findById(id).select('password')
+  const passwordInclude = bcrypt.compareSync(password, userDB.password)
+  if (passwordInclude) return next(ApiError.badRequest(undefined, '新密碼不得與舊密碼相同!'))
+
+  // 寫入資料庫
+  const newPasswordHash = bcrypt.hashSync(password, 12)
+  await User.findByIdAndUpdate(id, { password: newPasswordHash }, { runValidators: true })
+
+  successResponse({
+    res,
+    message: '重設密碼成功'
+  })
+}
+
+module.exports = { userBaseInfo, updateUserBaseInfo, updatePassword }

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const { isEmail } = require('validator')
+const Post = require('./post')
 
 const userSchema = new Schema({
   nickname: {
@@ -25,7 +26,7 @@ const userSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: 'default Img'
+    default: 'https://i.imgur.com/KPIA6Zi.png'
   },
   gender: {
     type: String,
@@ -34,18 +35,18 @@ const userSchema = new Schema({
       message: '性別設置，不符合規範。'
     }
   },
-  posts: {
-    type: Array,
-    default: []
-  },
-  likes: {
-    type: Array,
-    default: []
-  },
-  follows: {
-    type: Array,
-    default: []
-  },
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
+  likes: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Post'
+  }],
+  follows: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   createdAt: {
     type: Date,
     default: Date.now,
