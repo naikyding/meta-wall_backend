@@ -14,7 +14,7 @@ const creatPost = async (req, res, next) => {
   // 如果有上傳圖片
   const uploadFile = req.file
   if (uploadFile) {
-    const uploadImgBuffer = uploadFile.buffer
+    const uploadImgBuffer = await uploadFile.buffer
     const { data } = await uploadImgToImgUr(uploadImgBuffer)
     post.image = data.data.link
   }
