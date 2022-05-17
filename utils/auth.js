@@ -32,6 +32,10 @@ const verifyToken = (token) => JWT.verify(token, process.env.JWT_SECRET, (error,
  */
 const auth = async (req, res, next) => {
   const { authorization } = req.headers
+
+  console.log('--------auth middleware ------')
+  console.log(authorization)
+  console.log('--------auth middleware ------')
   if (!authorization || !authorization.startsWith('Bearer ')) { return next(ApiError.badRequest(undefined, '未授權，請輸入正確金鑰')) }
 
   const token = authorization.split(' ')[1]
