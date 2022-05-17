@@ -26,13 +26,11 @@ const creatPost = async (req, res, next) => {
   const { posts } = await User.findByIdAndUpdate(id, { $push: { posts: _id } }, { new: true }).select('posts')
   if (!posts.includes(_id)) return next(ApiError.badRequest(undefined, '新增失敗，請重試'))
 
-  setTimeout(() => {
-    successResponse({
-      res,
-      message: '新增成功',
-      data: { postId: _id }
-    })
-  }, 300)
+  successResponse({
+    res,
+    message: '新增成功',
+    data: { postId: _id }
+  })
 }
 
 const deletePost = async (req, res, next) => {
