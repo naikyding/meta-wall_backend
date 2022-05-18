@@ -1,0 +1,549 @@
+{
+	"info": {
+		"_postman_id": "12c038cd-7313-493f-b238-c57ea95288cf",
+		"name": "Meta-Wall",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "登入",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"0517@gmail.com\",\n    \"password\": \"123123123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "註冊",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nickname\": \"Naiky0517\",\n    \"email\": \"0517@gmail.com\",\n    \"password\": \"123123123\",\n    \"passwordConfirm\": \"123123123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Token 驗証",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/check_token",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"check_token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "[取得] 使用者基本資料",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[修改]使用者基本資料",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjgzMjI0MDY5YTE1YTc0MzU5NzRkNDAiLCJuaWNrbmFtZSI6Ik5haWt5MDUxNzAxIiwiaWF0IjoxNjUyNzY0ODQyLCJleHAiOjE2NTMzNjk2NDJ9.pfl1hw0rtnLGUmDIvJ01KP35di70UbVFT6z8GbzhYvQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "avatar",
+									"description": "頭像",
+									"type": "file",
+									"src": "/Users/1c00003/Downloads/4d6198b8a832c495bf5d79e844b304a2.jpeg"
+								},
+								{
+									"key": "nickname",
+									"value": "naiky",
+									"description": "暱稱",
+									"type": "text"
+								},
+								{
+									"key": "gender",
+									"value": "male",
+									"description": "性別",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改使用者密碼",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjgzMjI0MDY5YTE1YTc0MzU5NzRkNDAiLCJuaWNrbmFtZSI6Ik5haWt5MDUxNzAxIiwiaWF0IjoxNjUyNzY0ODQyLCJleHAiOjE2NTMzNjk2NDJ9.pfl1hw0rtnLGUmDIvJ01KP35di70UbVFT6z8GbzhYvQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"123\",\n    \"passwordConfirm\": \"123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/update_password",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"update_password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "新增貼文",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "HEROKU 新增的貼文內容",
+									"description": "貼文內容",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "上傳圖片",
+									"type": "file",
+									"src": "/Users/1c00003/Downloads/4d6198b8a832c495bf5d79e844b304a2.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/post",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除貼文",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6283c3720b50390717509022"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改貼文",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "content",
+									"value": "這是 heroku 修改的內容 1123",
+									"description": "貼文內容",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"description": "上傳圖片",
+									"type": "file",
+									"src": "/Users/1c00003/Downloads/4d6198b8a832c495bf5d79e844b304a2.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/post/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "62835b9000cc6d5b00f7a601"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "取得所有貼文",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/posts?q=heroku&s=o",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"posts"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "heroku"
+								},
+								{
+									"key": "s",
+									"value": "o"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "取得所有貼文 (全部)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/posts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "heroku",
+											"description": "關鍵字",
+											"disabled": true
+										},
+										{
+											"key": "s",
+											"value": "o",
+											"description": "預設排序: 新到舊,  'o': 舊到新",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "10456"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"28d8-yl9BXwhFkjmFYRoJdYBey86PkwQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 May 2022 03:04:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"操作成功\",\n    \"data\": [\n        {\n            \"_id\": \"62845732583af8e96195a126\",\n            \"content\": \"這是 codepen 新增的項目\",\n            \"image\": \"https://i.imgur.com/TLYCKOs.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-18T02:17:22.609Z\"\n        },\n        {\n            \"_id\": \"6283c3530b5039071750901f\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/ene6B2Z.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:46:27.456Z\"\n        },\n        {\n            \"_id\": \"6283c3510b5039071750901c\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/sVQpdPA.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:46:25.734Z\"\n        },\n        {\n            \"_id\": \"6283c34f0b50390717509019\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/zGAwOfr.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:46:23.232Z\"\n        },\n        {\n            \"_id\": \"6283c33c866ed03c9528983d\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/2fPAWT0.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:46:04.565Z\"\n        },\n        {\n            \"_id\": \"6283c33a866ed03c9528983a\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/bKpyrcO.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:46:02.159Z\"\n        },\n        {\n            \"_id\": \"6283c291866ed03c95289837\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/h6Ti1mS.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:43:13.878Z\"\n        },\n        {\n            \"_id\": \"6283c266866ed03c95289834\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/9LMynMr.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:42:30.923Z\"\n        },\n        {\n            \"_id\": \"6283c264866ed03c95289831\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/20ZHMhq.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:42:28.285Z\"\n        },\n        {\n            \"_id\": \"6283c0b9702f379e8145eb20\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/A6ZiOJ4.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:35:21.910Z\"\n        },\n        {\n            \"_id\": \"6283bfd5d0f460f18d8be6c3\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/r7pFGLS.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:31:33.437Z\"\n        },\n        {\n            \"_id\": \"6283bde0505ca02a63915590\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/FUZcdyZ.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:23:12.252Z\"\n        },\n        {\n            \"_id\": \"6283bddb505ca02a6391558d\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/vW7Ro4h.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:23:07.214Z\"\n        },\n        {\n            \"_id\": \"6283bd97505ca02a6391558a\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/cytblbm.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:59.929Z\"\n        },\n        {\n            \"_id\": \"6283bd95505ca02a63915587\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/4fnCGTC.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:57.914Z\"\n        },\n        {\n            \"_id\": \"6283bd93505ca02a63915584\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/Bf34T3q.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:55.931Z\"\n        },\n        {\n            \"_id\": \"6283bd89505ca02a63915581\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/K6LH0UG.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:45.188Z\"\n        },\n        {\n            \"_id\": \"6283bd85505ca02a6391557e\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/EUNxpud.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:41.318Z\"\n        },\n        {\n            \"_id\": \"6283bd82505ca02a6391557b\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/RpnV0kc.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:38.880Z\"\n        },\n        {\n            \"_id\": \"6283bd80505ca02a63915578\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/c8F6Uxr.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:36.530Z\"\n        },\n        {\n            \"_id\": \"6283bd7e505ca02a63915575\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/Y81TE8i.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:34.536Z\"\n        },\n        {\n            \"_id\": \"6283bd7c505ca02a63915572\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/hDNChtv.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:32.128Z\"\n        },\n        {\n            \"_id\": \"6283bd78505ca02a6391556f\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/7emGL1j.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:28.625Z\"\n        },\n        {\n            \"_id\": \"6283bd6c505ca02a6391556c\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/dkMWqmb.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:16.329Z\"\n        },\n        {\n            \"_id\": \"6283bd68505ca02a63915569\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/OBt2kVW.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:21:12.971Z\"\n        },\n        {\n            \"_id\": \"6283bd4fef3cb31cca2cd825\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/5IN6cFR.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:20:47.487Z\"\n        },\n        {\n            \"_id\": \"6283bcae92780fa3fa28b5e5\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/eymVJrO.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:18:06.425Z\"\n        },\n        {\n            \"_id\": \"6283bcab92780fa3fa28b5e2\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/WL9PxtU.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:18:03.205Z\"\n        },\n        {\n            \"_id\": \"6283bca792780fa3fa28b5df\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/ZSOrRmj.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:17:59.751Z\"\n        },\n        {\n            \"_id\": \"6283bca06bc3366bded07a2c\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/vmAvMr9.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:17:52.227Z\"\n        },\n        {\n            \"_id\": \"6283bc306bc3366bded07a29\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/E936UwB.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:16:00.507Z\"\n        },\n        {\n            \"_id\": \"6283bbc3faee823e1599fead\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/ankzsNE.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:14:11.765Z\"\n        },\n        {\n            \"_id\": \"6283b8a90f269dd84014bc63\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/4zYEgme.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:00:57.151Z\"\n        },\n        {\n            \"_id\": \"6283b8990f269dd84014bc60\",\n            \"content\": \"HEROKU 新增的貼文內容\",\n            \"image\": \"https://i.imgur.com/Il4aZ3w.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T15:00:41.443Z\"\n        },\n        {\n            \"_id\": \"628376e802a6ff89d649268d\",\n            \"content\": \"這是修改後的貼文內容\",\n            \"image\": \"https://i.imgur.com/hNBpZxa.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:20:24.538Z\"\n        },\n        {\n            \"_id\": \"6283769894aa5365512b4ad6\",\n            \"content\": \"這是修改後的貼文內容123\",\n            \"image\": \"https://i.imgur.com/caorJZe.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:19:04.356Z\"\n        },\n        {\n            \"_id\": \"6283768c1bb41b51eb990c53\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/6JegHXZ.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:18:52.681Z\"\n        },\n        {\n            \"_id\": \"6283763ae092ab65954b54aa\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/q9rLVc7.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:17:30.600Z\"\n        },\n        {\n            \"_id\": \"62837620e2c387a6a8e617ba\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/zUMh0Y5.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:17:04.443Z\"\n        },\n        {\n            \"_id\": \"628375df9d947248a9b2646a\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/JUGSJpJ.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:15:59.889Z\"\n        },\n        {\n            \"_id\": \"6283753d4de36dd10efece1a\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/SFOHjbW.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:13:17.947Z\"\n        },\n        {\n            \"_id\": \"628374e64a0e4ee04273266b\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/TRmy4iz.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:11:50.140Z\"\n        },\n        {\n            \"_id\": \"628374bd80c0a3dc247b7440\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/1gFuNHL.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:11:09.711Z\"\n        },\n        {\n            \"_id\": \"6283744b230b1382fd7f00a3\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/TFo9Qhx.jpg\",\n            \"user\": \"6283737f230b1382fd7f00a0\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:09:15.651Z\"\n        },\n        {\n            \"_id\": \"628372c9a66e19e48374bbe3\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/C3ZGsdR.jpg\",\n            \"user\": \"6283224069a15a7435974d40\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T10:02:49.332Z\"\n        },\n        {\n            \"_id\": \"62836befbaeecf7cf5be1430\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/Y7wbnVF.jpg\",\n            \"user\": \"6283224069a15a7435974d40\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T09:33:35.126Z\"\n        },\n        {\n            \"_id\": \"62835cc9db245ddc891b2061\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/BZkeQcE.jpg\",\n            \"user\": \"6283224069a15a7435974d40\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T08:28:57.131Z\"\n        },\n        {\n            \"_id\": \"62835bdc34e14902a255b162\",\n            \"content\": \"貼文內容\",\n            \"image\": \"https://i.imgur.com/CVGJf7m.jpg\",\n            \"user\": \"6283224069a15a7435974d40\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T08:25:00.917Z\"\n        },\n        {\n            \"_id\": \"62835b9000cc6d5b00f7a601\",\n            \"content\": \"這是 heroku 修改的內容 1123\",\n            \"image\": \"https://i.imgur.com/flIuUlL.jpg\",\n            \"user\": \"6283224069a15a7435974d40\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T08:23:44.560Z\"\n        }\n    ]\n}"
+						},
+						{
+							"name": "取得所有貼文 (篩選功能)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/posts?q=heroku&s=o",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"posts"
+									],
+									"query": [
+										{
+											"key": "q",
+											"value": "heroku",
+											"description": "關鍵字"
+										},
+										{
+											"key": "s",
+											"value": "o",
+											"description": "預設排序: 新到舊,  'o': 舊到新"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "271"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"10f-GK7tKBXVdgLruN9ZzT79CJFdQRs\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 18 May 2022 03:04:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"操作成功\",\n    \"data\": [\n        {\n            \"_id\": \"62835b9000cc6d5b00f7a601\",\n            \"content\": \"這是 heroku 修改的內容 1123\",\n            \"image\": \"https://i.imgur.com/flIuUlL.jpg\",\n            \"user\": \"6283224069a15a7435974d40\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T08:23:44.560Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "heroku",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "localhost",
+			"value": "",
+			"type": "string",
+			"disabled": true
+		}
+	]
+}
