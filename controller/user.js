@@ -5,10 +5,13 @@ const uploadImgToImgUr = require('../utils/uploadImg')
 const bcrypt = require('bcryptjs')
 
 const userBaseInfo = async (req, res, next) => {
+  const errorHandle = () => next(ApiError.badRequest(undefined, '驗証錯誤，請重新登入'))
+
   const { _id, nickname } = req.user
-  if (!_id) return next(ApiError.badRequest(undefined, '驗証錯誤，請重新登入'))
+  if (!_id) return errorHandle()
 
   const userData = await User.findOne({ _id, nickname }).select('nickname avatar gender updatedAt')
+  if (!userData) return errorHandle()
 
   successResponse({
     res,
