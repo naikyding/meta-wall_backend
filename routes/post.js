@@ -6,7 +6,7 @@ const { auth } = require('../utils/auth')
 const { creatPost, deletePost, updatePost } = require('../controller/post')
 const { passFileToBodyByFormData } = require('../utils/formDataHandle')
 
-router.post('/', auth, apiCatch(passFileToBodyByFormData('image', 'post /')), apiCatch(creatPost))
+router.post('/', apiCatch(passFileToBodyByFormData('image', 'post /')), auth, apiCatch(creatPost))
 
 router.delete('/:id', auth, apiCatch(deletePost))
 
