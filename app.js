@@ -34,6 +34,12 @@ app.use('/posts', postsRouter)
 app.use((req, res) => res.status(404).send('Not Found'))
 app.use(errorHandle)
 
+process.on('uncaughtException', (error) => {
+  console.log('--------------- uncaughtException (start) -------------------')
+  console.log(error)
+  console.log('--------------- uncaughtException (end) -------------------')
+})
+
 process.on('unhandledRejection', (error) => {
   console.log('--------------- unhandledRejection (start) -------------------')
   console.log(error)
