@@ -32,12 +32,13 @@ const verifyToken = (token) => JWT.verify(token, process.env.JWT_SECRET, (error,
  */
 const auth = async (req, res, next) => {
   const { authorization } = req.headers
+  const errorMessage = '驗證失敗，請重新登入'
 
-  if (!authorization || !authorization.startsWith('Bearer ')) { return next(ApiError.badRequest(undefined, '未授權，請輸入正確金鑰')) }
+  if (!authorization || !authorization.startsWith('Bearer ')) { return next(ApiError.badRequest(403, errorMessage)) }
 
   const token = authorization.split(' ')[1]
   const { errors, user } = await verifyToken(token)
-  if (errors) return next(ApiError.badRequest(401, errorGeneralMessage[errors.message] || '驗證失敗，請重新登入'))
+  if (errors) return next(ApiError.badRequest(401, errorGeneralMessage[errors.message] || errorMessage))
   req.user = user
   next()
 }

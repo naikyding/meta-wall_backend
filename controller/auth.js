@@ -17,10 +17,12 @@ const register = async (req, res, next) => {
     gender
   } = req.body
 
-  if (!(password === passwordConfirm)) return next(ApiError.badRequest(422, '輸入密碼不一致!'))
-  if (password.length < 8) return next(ApiError.badRequest(422, '密碼長度不得少於 8 碼'))
+  const statusCode = 401
+
+  if (!(password === passwordConfirm)) return next(ApiError.badRequest(statusCode, '輸入密碼不一致!'))
+  if (password.length < 8) return next(ApiError.badRequest(statusCode, '密碼長度不得少於 8 碼'))
   const userData = await User.findOne({ email }).select('email')
-  if (userData) return next(ApiError.badRequest(422, '電子郵件的使用者帳戶已存在。'))
+  if (userData) return next(ApiError.badRequest(statusCode, '電子郵件的使用者帳戶已存在。'))
 
   const createdData = await User.create({
     nickname,
@@ -41,17 +43,19 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
   const { email, password } = req.body
+  const statusCode = 401
 
-  if (!email || !password) return next(ApiError.badRequest(undefined, '資料有誤，請填寫完善!'))
-  const userData = await User.findOne({ email }).select('_id nickname email password')
-  if (!userData) return next(ApiError.badRequest(undefined, '電子信箱或密碼錯誤。'))
+  if (!email || !password) return next(ApiError.badRequest(statusCode, '資料有誤，請填寫完善!'))
+  const userData = await User.findOne({ email }).select('_id nickname password avatar')
+  if (!userData) return next(ApiError.badRequest(statusCode, '電子信箱或密碼錯誤。'))
   const passwordCheckStatus = bcrypt.compareSync(password, userData.password)
-  if (!passwordCheckStatus) return next(ApiError.badRequest(undefined, '電子信箱或密碼錯誤。'))
+  if (!passwordCheckStatus) return next(ApiError.badRequest(statusCode, '電子信箱或密碼錯誤。'))
 
   const tokenType = 'Bearer '
   const token = generatorToken({
     _id: userData._id,
-    nickname: userData.nickname
+    nickname: userData.nickname,
+    avatar: userData.avatar
   })
 
   res.append('Authorization', tokenType + token)
@@ -60,8 +64,9 @@ const login = async (req, res, next) => {
     message: '登入成功',
     data: {
       user: {
+        id: userData._id,
         nickname: userData.nickname,
-        email: userData.email
+        avatar: userData.avatar
       },
       tokenType,
       token
