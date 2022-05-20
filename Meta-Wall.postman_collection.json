@@ -137,7 +137,7 @@
 								},
 								{
 									"key": "nickname",
-									"value": "DEV_Naiky",
+									"value": "DEV_456",
 									"description": "暱稱",
 									"type": "text"
 								},
@@ -215,7 +215,7 @@
 							"formdata": [
 								{
 									"key": "content",
-									"value": "HEROKU 新增的貼文內容",
+									"value": "postman 新增的貼文內容",
 									"description": "貼文內容",
 									"type": "text"
 								},
@@ -329,12 +329,11 @@
 							{
 								"key": "Authorization",
 								"value": "{{token}}",
-								"type": "text",
-								"disabled": true
+								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/posts?q=heroku&s=o",
+							"raw": "{{baseUrl}}/posts?q=&s=o",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -344,7 +343,7 @@
 							"query": [
 								{
 									"key": "q",
-									"value": "heroku"
+									"value": ""
 								},
 								{
 									"key": "s",
