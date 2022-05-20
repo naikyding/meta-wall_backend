@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"0517@gmail.com\",\n    \"password\": \"123123123\"\n}",
+							"raw": "{\n    \"email\": \"dev@gmail.com\",\n    \"password\": \"11111111\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -121,7 +121,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjgzMjI0MDY5YTE1YTc0MzU5NzRkNDAiLCJuaWNrbmFtZSI6Ik5haWt5MDUxNzAxIiwiaWF0IjoxNjUyNzY0ODQyLCJleHAiOjE2NTMzNjk2NDJ9.pfl1hw0rtnLGUmDIvJ01KP35di70UbVFT6z8GbzhYvQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
@@ -132,11 +132,12 @@
 									"key": "avatar",
 									"description": "頭像",
 									"type": "file",
-									"src": "/Users/1c00003/Downloads/4d6198b8a832c495bf5d79e844b304a2.jpeg"
+									"src": "/Users/1c00003/Downloads/4d6198b8a832c495bf5d79e844b304a2.jpeg",
+									"disabled": true
 								},
 								{
 									"key": "nickname",
-									"value": "naiky",
+									"value": "DEV_Naiky",
 									"description": "暱稱",
 									"type": "text"
 								},
@@ -167,7 +168,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjgzMjI0MDY5YTE1YTc0MzU5NzRkNDAiLCJuaWNrbmFtZSI6Ik5haWt5MDUxNzAxIiwiaWF0IjoxNjUyNzY0ODQyLCJleHAiOjE2NTMzNjk2NDJ9.pfl1hw0rtnLGUmDIvJ01KP35di70UbVFT6z8GbzhYvQ",
+								"value": "{{token}}",
 								"type": "text"
 							}
 						],
