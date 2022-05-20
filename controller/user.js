@@ -7,15 +7,22 @@ const bcrypt = require('bcryptjs')
 const userBaseInfo = async (req, res, next) => {
   const errorHandle = () => next(ApiError.badRequest(undefined, '驗証錯誤，請重新登入'))
 
-  const { _id, nickname } = req.user
+  const { _id } = req.user
   if (!_id) return errorHandle()
 
-  const userData = await User.findOne({ _id, nickname }).select('nickname avatar gender updatedAt')
+  const userData = await User.findOne({ _id }).select('nickname avatar gender updatedAt')
   if (!userData) return errorHandle()
 
   successResponse({
     res,
-    data: { user: userData }
+    data: {
+      user: {
+        id: userData._id,
+        nickname: userData.nickname,
+        avatar: userData.avatar,
+        gender: userData.gender
+      }
+    }
   })
 }
 
