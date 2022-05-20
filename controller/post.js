@@ -48,6 +48,7 @@ const deletePost = async (req, res, next) => {
   })
 }
 
+// TODO 文章移除後，移除使用者 posts
 const updatePost = async (req, res, next) => {
   const postUpdateData = {}
   const postId = req.params.id
