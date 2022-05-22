@@ -5,6 +5,21 @@ const { successResponse } = require('../utils/responseHandle')
 const uploadImgToImgUr = require('../utils/uploadImg')
 const { verifyObjectId } = require('../utils/mongoose')
 
+const getUserPost = async (req, res, next) => {
+  const id = req.params.id
+  if (!id) return next(ApiError.badRequest(undefined, '請帶入使用者 id'))
+  if (!verifyObjectId(id)) return next(ApiError.badRequest(undefined, '使用者 id 錯誤'))
+
+  const resData = await User.findById(id).populate({
+    path: 'posts'
+  }).select('-gender -updatedAt -email')
+
+  successResponse({
+    res,
+    data: resData
+  })
+}
+
 const creatPost = async (req, res, next) => {
   const post = {}
   const { content } = req.body
@@ -73,4 +88,5 @@ const updatePost = async (req, res, next) => {
     message: '修改成功'
   })
 }
-module.exports = { creatPost, deletePost, updatePost }
+
+module.exports = { creatPost, deletePost, updatePost, getUserPost }

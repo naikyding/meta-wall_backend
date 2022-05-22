@@ -3,8 +3,10 @@ const router = Router()
 
 const { apiCatch } = require('../utils/errorHandle')
 const { auth } = require('../utils/auth')
-const { creatPost, deletePost, updatePost } = require('../controller/post')
+const { creatPost, deletePost, updatePost, getUserPost } = require('../controller/post')
 const { passFileToBodyByFormData } = require('../utils/formDataHandle')
+
+router.get('/:id', auth, apiCatch(getUserPost))
 
 router.post('/', apiCatch(passFileToBodyByFormData('image', 'post /')), auth, apiCatch(creatPost))
 
