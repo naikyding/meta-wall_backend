@@ -43,7 +43,13 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Post'
   }],
+  // 追蹤他人
   follows: [{
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }],
+  // 被追蹤
+  follower: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],
