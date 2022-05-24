@@ -17,10 +17,10 @@ const postSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],
-  comments: {
-    type: Array,
-    default: []
-  },
+  comments: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Comment'
+  }],
   createdAt: {
     type: Date,
     default: Date.now
