@@ -5,16 +5,16 @@ const commentSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: [true, '請輸入評論者 id']
   },
   post: {
     type: Schema.Types.ObjectId,
     ref: 'Post',
-    required: true
+    required: [true, '請填入貼文 id']
   },
   content: {
     type: String,
-    required: true
+    required: [true, '請填入貼文內容']
   },
   createdAt: {
     type: Date,
