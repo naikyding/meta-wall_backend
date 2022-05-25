@@ -3,6 +3,17 @@ const { Schema } = mongoose
 const { isEmail } = require('validator')
 const Post = require('./post')
 
+const followsUser = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  createdAt: {
+    type: Date,
+    default: new Date()
+  }
+})
+
 const userSchema = new Schema({
   nickname: {
     type: String,
@@ -43,7 +54,10 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Post'
   }],
-  follows: [{
+  // 追蹤他人
+  follows: [followsUser],
+  // 被追蹤
+  follower: [{
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],

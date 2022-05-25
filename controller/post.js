@@ -5,6 +5,21 @@ const { successResponse } = require('../utils/responseHandle')
 const uploadImgToImgUr = require('../utils/uploadImg')
 const { verifyObjectId } = require('../utils/mongoose')
 
+const getUserPost = async (req, res, next) => {
+  const id = req.params.id
+  if (!id) return next(ApiError.badRequest(undefined, '請帶入使用者 id'))
+  if (!verifyObjectId(id)) return next(ApiError.badRequest(undefined, '使用者 id 錯誤'))
+
+  const resData = await User.findById(id).populate({
+    path: 'posts'
+  }).select('-gender -updatedAt -email')
+
+  successResponse({
+    res,
+    data: resData
+  })
+}
+
 const creatPost = async (req, res, next) => {
   const post = {}
   const { content } = req.body
@@ -48,13 +63,14 @@ const deletePost = async (req, res, next) => {
   })
 }
 
+// TODO 文章移除後，移除使用者 posts
 const updatePost = async (req, res, next) => {
   const postUpdateData = {}
   const postId = req.params.id
   const { content } = req.body
 
-  if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(undefined, '貼文 id 錯誤'))
-  if (!content) return next(ApiError.badRequest(undefined, '貼文內容必填'))
+  if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(400, '貼文 id 錯誤'))
+  if (!content) return next(ApiError.badRequest(400, '貼文內容必填'))
 
   if (req.file) {
     const imgBuffer = req.file.buffer
@@ -65,11 +81,65 @@ const updatePost = async (req, res, next) => {
   postUpdateData.content = content
 
   const updateStatus = await Post.findByIdAndUpdate(postId, postUpdateData, { new: true }).select('_id')
-  if (!updateStatus) return next(ApiError.badRequest(undefined, '修改失敗'))
+  if (!updateStatus) return next(ApiError.badRequest(400, '修改失敗'))
 
   successResponse({
     res,
     message: '修改成功'
   })
 }
-module.exports = { creatPost, deletePost, updatePost }
+
+const getPostsLikes = async (req, res, next) => {
+  const postId = req.params.postId
+  if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(400, '貼文 id 錯誤'))
+
+  const likesList = await Post.findById(postId).populate({
+    path: 'likes',
+    ref: 'User',
+    select: 'nickname avatar follows',
+    populate: {
+      path: 'follows.userId',
+      ref: 'User',
+      select: 'nickname avatar'
+    }
+  }).select('-comments -updatedAt')
+
+  if (!likesList) return next(ApiError.badRequest(400, '發生錯誤，請重試'))
+
+  successResponse({
+    res,
+    message: 'LIKES',
+    data: likesList
+  })
+}
+
+const getPostsComments = async (req, res, next) => {
+  const postId = req.params.postId
+  if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(400, '貼文 id 錯誤'))
+
+  const commentsList = await Post.findById(postId).select('-likes').populate({
+    path: 'comments',
+    ref: 'Comment',
+    select: '-updatedAt -post',
+    populate: {
+      path: 'user',
+      ref: 'User',
+      select: 'nickname avatar'
+    }
+  })
+
+  successResponse({
+    res,
+    message: 'COMMENTS',
+    data: commentsList
+  })
+}
+
+module.exports = {
+  creatPost,
+  deletePost,
+  updatePost,
+  getUserPost,
+  getPostsLikes,
+  getPostsComments
+}

@@ -12,6 +12,9 @@ const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
 const postRouter = require('./routes/post')
 const postsRouter = require('./routes/posts')
+const likesRouter = require('./routes/likes')
+const followsRouter = require('./routes/follows')
+const commentsRouter = require('./routes/comments.js')
 
 const app = express()
 
@@ -29,6 +32,9 @@ app.use('/auth', authRouter)
 app.use('/user', userRouter)
 app.use('/post', postRouter)
 app.use('/posts', postsRouter)
+app.use('/likes', likesRouter)
+app.use('/follows', followsRouter)
+app.use('/comments', commentsRouter)
 
 // Error Handle
 app.use((req, res) => res.status(404).send('Not Found'))
