@@ -1,0 +1,36 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.234.0/containers/javascript-node
+{
+  "name": "Node.js",
+  "image": "node:16.15.0",
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "editor.tabSize": 2,
+    "files.autoSave": "onWindowChange", // 切換視窗自動存檔
+    "editor.formatOnSave": true, // 存檔時自動 format
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+    },
+    "eslint.validate": ["javascript"]
+  },
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "vue.volar",
+    "bradlc.vscode-tailwindcss",
+    "tabnine.tabnine-vscode",
+    "pkief.material-icon-theme",
+    "eamodio.gitlens",
+    "oderwat.indent-rainbow",
+    "lllllllqw.jsdoc",
+    "formulahendry.auto-rename-tag",
+    "formulahendry.auto-close-tag",
+    "naumovs.color-highlight"
+  ],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "yarn install",
+  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  "remoteUser": "node"
+}
