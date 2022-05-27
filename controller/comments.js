@@ -19,7 +19,7 @@ const comments = async (req, res, next) => {
   })
 
   if (!commentResData.post) return next(ApiError.badRequest(400, '留言失敗，請重試'))
-  await Post.findByIdAndUpdate(postId, { $push: { comments: commentResData.post } }, { new: true })
+  await Post.findByIdAndUpdate(postId, { $push: { comments: commentResData._id } }, { new: true })
   const userData = await User.findById(commentResData.user)
 
   successResponse({
