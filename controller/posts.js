@@ -15,7 +15,7 @@ const getPostsList = async (req, res, next) => {
     .select('-updatedAt')
     .sort({ createdAt: createdAtSort })
 
-  if (!postList) return next(ApiError.badRequest(undefined, '操作失敗，請重試'))
+  if (!postList) return next(ApiError.badRequest(400, '操作失敗，請重試'))
 
   successResponse({
     res,

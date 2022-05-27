@@ -130,7 +130,6 @@ const getPostsComments = async (req, res, next) => {
 
   successResponse({
     res,
-    message: 'COMMENTS',
     data: commentsList
   })
 }

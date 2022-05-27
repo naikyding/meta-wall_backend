@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose
 const { isEmail } = require('validator')
-const Post = require('./post')
 
 const followsUser = new Schema({
   userId: {
@@ -23,7 +22,7 @@ const userSchema = new Schema({
     type: String,
     require: [true, '請輸入電子信箱'],
     validate: {
-      validator (email) {
+      validator: email => {
         return isEmail(email)
       },
       message: props => `${props.value} 不是正確的電子信箱格式`
