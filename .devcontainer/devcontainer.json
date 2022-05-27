@@ -11,7 +11,9 @@
     "editor.codeActionsOnSave": {
       "source.fixAll.eslint": true
     },
-    "eslint.validate": ["javascript"]
+    "eslint.validate": [
+      "javascript"
+    ]
   },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
@@ -25,7 +27,8 @@
     "lllllllqw.jsdoc",
     "formulahendry.auto-rename-tag",
     "formulahendry.auto-close-tag",
-    "naumovs.color-highlight"
+    "naumovs.color-highlight",
+    "mongodb.mongodb-vscode"
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
