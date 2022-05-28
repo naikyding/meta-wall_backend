@@ -6,12 +6,20 @@ const uploadImgToImgUr = require('../utils/uploadImg')
 const { verifyObjectId } = require('../utils/mongoose')
 
 const getUserPost = async (req, res, next) => {
+  const { q, s } = req.query
+  const keyword = new RegExp(q)
+  const createdAtSort = (s && s === 'o') ? 1 : -1 // o: 舊到新
+
   const id = req.params.id
   if (!id) return next(ApiError.badRequest(undefined, '請帶入使用者 id'))
   if (!verifyObjectId(id)) return next(ApiError.badRequest(undefined, '使用者 id 錯誤'))
 
   const resData = await User.findById(id).populate({
-    path: 'posts'
+    path: 'posts',
+    match: { content: keyword },
+    options: {
+      sort: { createdAt: createdAtSort }
+    }
   }).select('-gender -updatedAt -email')
 
   successResponse({
