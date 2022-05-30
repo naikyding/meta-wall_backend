@@ -42,7 +42,7 @@ const creatPost = async (req, res, next) => {
     post.image = data.link
   }
 
-  post.content = content
+  post.content = content.trim()
   post.user = id
 
   const { _id } = await Post.create(post)
@@ -88,7 +88,7 @@ const updatePost = async (req, res, next) => {
     postUpdateData.image = data.link
   }
 
-  postUpdateData.content = content
+  postUpdateData.content = content.trim()
 
   const updateStatus = await Post.findByIdAndUpdate(postId, postUpdateData, { new: true }).select('_id')
   if (!updateStatus) return next(ApiError.badRequest(400, '修改失敗'))
