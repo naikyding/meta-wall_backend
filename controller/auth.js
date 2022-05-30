@@ -19,7 +19,9 @@ const register = async (req, res, next) => {
 
   const statusCode = 401
 
+  if (nickname.length < 2) return next(ApiError.badRequest(statusCode, '暱稱至少 2 個字元以上!'))
   if (!(password === passwordConfirm)) return next(ApiError.badRequest(statusCode, '輸入密碼不一致!'))
+  if (!/^([a-zA-Z]+\d+|\d+[a-zA-Z]+)[a-zA-Z0-9]*$/.test(password)) return next(ApiError.badRequest(statusCode, '密碼必須英數混合'))
   if (password.length < 8) return next(ApiError.badRequest(statusCode, '密碼長度不得少於 8 碼'))
   const userData = await User.findOne({ email }).select('email')
   if (userData) return next(ApiError.badRequest(statusCode, '電子郵件的使用者帳戶已存在。'))

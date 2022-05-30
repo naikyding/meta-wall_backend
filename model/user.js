@@ -16,7 +16,8 @@ const followsUser = new Schema({
 const userSchema = new Schema({
   nickname: {
     type: String,
-    required: [true, '請輸入暱稱']
+    required: [true, '請輸入暱稱'],
+    minlength: [2, '暱稱至少 2 個字元以上']
   },
   email: {
     type: String,
