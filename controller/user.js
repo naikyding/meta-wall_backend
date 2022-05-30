@@ -1,8 +1,9 @@
 const { ApiError } = require('../utils/errorHandle')
 const User = require('../model/user')
 const { successResponse } = require('../utils/responseHandle')
-const uploadImgToImgUr = require('../utils/uploadImg')
 const bcrypt = require('bcryptjs')
+const uploadImg = require('../utils/uploadImageToImgur')
+const sizeOf = require('image-size')
 
 const userBaseInfo = async (req, res, next) => {
   const errorHandle = () => next(ApiError.badRequest(undefined, '驗証錯誤，請重新登入'))
@@ -29,13 +30,17 @@ const userBaseInfo = async (req, res, next) => {
 const updateUserBaseInfo = async (req, res, next) => {
   const userUpdateData = {}
   const { nickname, gender } = req.body
-  if (!nickname || !gender) return next(ApiError.badRequest(undefined, '請完善個人資料'))
+  if (!nickname || !gender) return next(ApiError.badRequest(400, '請完善個人資料'))
 
+  const uploadFiles = req.files[0]
   // 若有上傳頭像
-  if (req.file) {
-    const imgBuffer = req.file.buffer
-    const { data } = await uploadImgToImgUr(imgBuffer)
-    userUpdateData.avatar = data.data.link
+  if (uploadFiles) {
+    const imgBuffer = uploadFiles.buffer
+    const { width, height } = await sizeOf(imgBuffer)
+    if (width !== height) return next(ApiError.badRequest(400, '圖片寬高比必需為 1:1，請重新上傳'))
+
+    const { data } = await uploadImg(imgBuffer)
+    userUpdateData.avatar = data.link
   }
 
   userUpdateData.nickname = nickname
