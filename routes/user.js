@@ -1,8 +1,8 @@
 const { Router } = require('express')
 const { auth } = require('../utils/auth')
 const { apiCatch } = require('../utils/errorHandle')
-const { passFileToBodyByFormData } = require('../utils/formDataHandle')
 const { userBaseInfo, updateUserBaseInfo, updatePassword } = require('../controller/user')
+const postFiles = require('../utils/formFiles')
 
 const router = Router()
 
@@ -10,7 +10,7 @@ const router = Router()
 router.get('/', auth, apiCatch(userBaseInfo))
 
 // 修改使用者基本資料
-router.patch('/', apiCatch(passFileToBodyByFormData('avatar')), auth, apiCatch(updateUserBaseInfo))
+router.patch('/', auth, postFiles, apiCatch(updateUserBaseInfo))
 
 // 修改使用者密碼
 router.patch('/update_password', auth, apiCatch(updatePassword))
