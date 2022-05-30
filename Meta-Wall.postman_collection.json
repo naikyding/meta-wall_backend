@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "12c038cd-7313-493f-b238-c57ea95288cf",
 		"name": "Meta-Wall",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16162398"
 	},
 	"item": [
 		{
@@ -132,8 +133,7 @@
 									"key": "avatar",
 									"description": "頭像",
 									"type": "file",
-									"src": "/Users/1c00003/Downloads/4d6198b8a832c495bf5d79e844b304a2.jpeg",
-									"disabled": true
+									"src": "/Users/nikedin/Downloads/topgun.jpeg"
 								},
 								{
 									"key": "nickname",
@@ -192,7 +192,221 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "400 密碼長度不得少於 8 碼!",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"123\",\n    \"passwordConfirm\": \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/update_password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"update_password"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "59"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b-dIIKVcsJ6JyfDt1+VAYK485Py10\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 20 May 2022 07:57:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"密碼長度不得少於 8 碼\"\n}"
+						},
+						{
+							"name": "400 輸入密碼不一致!",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"11111111\",\n    \"passwordConfirm\": \"1111111\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/update_password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"update_password"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "51"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"33-Km6UPEZdvCECgzBI1l2/iAECmHw\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 20 May 2022 07:57:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"輸入密碼不一致!\"\n}"
+						},
+						{
+							"name": "400 新密碼不得與舊密碼相同",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"11111111\",\n    \"passwordConfirm\": \"11111111\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/user/update_password",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"user",
+										"update_password"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3f-84aMaJXvHLLqj1zST5XjX8HYZKo\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 20 May 2022 07:58:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": false,\n    \"message\": \"新密碼不得與舊密碼相同!\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -215,7 +429,7 @@
 							"formdata": [
 								{
 									"key": "content",
-									"value": "postman 新增的貼文內容",
+									"value": "好看哦!",
 									"description": "貼文內容",
 									"type": "text"
 								},
@@ -223,7 +437,7 @@
 									"key": "image",
 									"description": "上傳圖片",
 									"type": "file",
-									"src": "/Users/1c00003/Downloads/4d6198b8a832c495bf5d79e844b304a2.jpeg"
+									"src": "/Users/nikedin/Downloads/topgun.jpeg"
 								}
 							]
 						},
@@ -285,7 +499,7 @@
 							"formdata": [
 								{
 									"key": "content",
-									"value": "這是 heroku 修改的內容 1123",
+									"value": "這是修改內容",
 									"description": "貼文內容",
 									"type": "text"
 								},
@@ -293,7 +507,7 @@
 									"key": "image",
 									"description": "上傳圖片",
 									"type": "file",
-									"src": "/Users/1c00003/Downloads/4d6198b8a832c495bf5d79e844b304a2.jpeg"
+									"src": "/Users/nikedin/Downloads/topgun.jpeg"
 								}
 							]
 						},
@@ -309,7 +523,109 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "62835b9000cc6d5b00f7a601"
+									"value": "6294a2f0976bdcaae7c22032"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得使用者貼文",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/:id?q=&s=o",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								":id"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": ""
+								},
+								{
+									"key": "s",
+									"value": "o"
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "628670551fba52016d706905"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得貼文(按讚)資料",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/likes/:postId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"likes",
+								":postId"
+							],
+							"variable": [
+								{
+									"key": "postId",
+									"value": "6285041352d2a92548925192"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得貼文 (留言) 資料",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/comments/:postId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"comments",
+								":postId"
+							],
+							"variable": [
+								{
+									"key": "postId",
+									"value": "6285041352d2a92548925192"
 								}
 							]
 						}
@@ -502,6 +818,364 @@
 							"body": "{\n    \"status\": true,\n    \"message\": \"操作成功\",\n    \"data\": [\n        {\n            \"_id\": \"62835b9000cc6d5b00f7a601\",\n            \"content\": \"這是 heroku 修改的內容 1123\",\n            \"image\": \"https://i.imgur.com/flIuUlL.jpg\",\n            \"user\": \"6283224069a15a7435974d40\",\n            \"likes\": [],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-17T08:23:44.560Z\"\n        }\n    ]\n}"
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Likes",
+			"item": [
+				{
+					"name": "取得最愛貼文",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/likes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"likes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "成功取得最愛",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/likes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"likes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "952"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3b8-AyndjtsXDCEfodMrEx/UvukXY/U\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 20 May 2022 21:32:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"操作成功\",\n    \"data\": [\n        {\n            \"_id\": \"6285041352d2a92548925192\",\n            \"content\": \"我是高進\",\n            \"image\": \"https://i.imgur.com/ItsOXUj.png\",\n            \"user\": {\n                \"_id\": \"6283737f230b1382fd7f00a0\",\n                \"nickname\": \"Naiky0517\",\n                \"avatar\": \"https://i.imgur.com/KPIA6Zi.png\"\n            },\n            \"likes\": [\n                \"628670551fba52016d706905\"\n            ],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-18T14:34:59.891Z\"\n        },\n        {\n            \"_id\": \"628504f652d2a92548925199\",\n            \"content\": \"本土飆破8萬5千例!\",\n            \"image\": \"https://i.imgur.com/IpM13sZ.jpg\",\n            \"user\": {\n                \"_id\": \"6283737f230b1382fd7f00a0\",\n                \"nickname\": \"Naiky0517\",\n                \"avatar\": \"https://i.imgur.com/KPIA6Zi.png\"\n            },\n            \"likes\": [\n                \"628670551fba52016d706905\"\n            ],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-18T14:38:46.590Z\"\n        },\n        {\n            \"_id\": \"62873574e9dfe872740c6d77\",\n            \"content\": \"dev image\",\n            \"image\": \"https://i.imgur.com/Wj1XLpq.jpg\",\n            \"user\": {\n                \"_id\": \"628670551fba52016d706905\",\n                \"nickname\": \"DEV\",\n                \"avatar\": \"https://i.imgur.com/A0ASHjs.jpg\"\n            },\n            \"likes\": [\n                \"628670551fba52016d706905\"\n            ],\n            \"comments\": [],\n            \"createdAt\": \"2022-05-20T06:30:12.911Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "加入/移除 最愛",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"postId\": \"6285041352d2a92548925192\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/likes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"likes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "取得成功",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"postId\": \"62873574e9dfe872740c6d77\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/likes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"likes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "140"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"8c-Xp5hqD8GF6bRGpYpFJNOhnlU1D0\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 20 May 2022 21:35:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"操作成功\",\n    \"data\": {\n        \"likes\": [\n            \"6285041352d2a92548925192\",\n            \"628504f652d2a92548925199\",\n            \"62873574e9dfe872740c6d77\"\n        ]\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Follows",
+			"item": [
+				{
+					"name": "追蹤使用者 toggle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"followUserId\": \"628206bf69a5861311959731\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/follows",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"follows"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得 (個人) 追蹤名單",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/follows",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"follows"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "留言",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"postId\": \"6285041352d2a92548925192\",\n    \"content\": \"新增留言\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "查詢文章留言列表",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/comments/:postId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comments",
+								":postId"
+							],
+							"variable": [
+								{
+									"key": "postId",
+									"value": "6285041352d2a92548925192"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Upload",
+			"item": [
+				{
+					"name": "頭像圖片上傳",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/Users/nikedin/Downloads/topgun.jpeg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/avatar-img-upload",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"avatar-img-upload"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
