@@ -2,7 +2,7 @@ const Post = require('../model/post')
 const User = require('../model/user')
 const { ApiError } = require('../utils/errorHandle')
 const { successResponse } = require('../utils/responseHandle')
-const uploadImgToImgUr = require('../utils/uploadImg')
+const uploadImg = require('../utils/uploadImageToImgur')
 const { verifyObjectId } = require('../utils/mongoose')
 
 const getUserPost = async (req, res, next) => {
@@ -32,14 +32,14 @@ const creatPost = async (req, res, next) => {
   const post = {}
   const { content } = req.body
   const id = req.user._id
-  if (!content) return next(ApiError.badRequest(undefined, '請輸入貼文內容'))
+  if (!content) return next(ApiError.badRequest(400, '請輸入貼文內容'))
 
   // 如果有上傳圖片
-  const uploadFile = req.file
+  const uploadFile = req.files[0]
   if (uploadFile) {
     const uploadImgBuffer = uploadFile.buffer
-    const { data } = await uploadImgToImgUr(uploadImgBuffer)
-    post.image = data.data.link
+    const { data } = await uploadImg(uploadImgBuffer)
+    post.image = data.link
   }
 
   post.content = content
@@ -47,7 +47,7 @@ const creatPost = async (req, res, next) => {
 
   const { _id } = await Post.create(post)
   const { posts } = await User.findByIdAndUpdate(id, { $push: { posts: _id } }, { new: true }).select('posts')
-  if (!posts.includes(_id)) return next(ApiError.badRequest(undefined, '新增失敗，請重試'))
+  if (!posts.includes(_id)) return next(ApiError.badRequest(400, '新增失敗，請重試'))
 
   successResponse({
     res,
@@ -80,10 +80,12 @@ const updatePost = async (req, res, next) => {
   if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(400, '貼文 id 錯誤'))
   if (!content) return next(ApiError.badRequest(400, '貼文內容必填'))
 
-  if (req.file) {
-    const imgBuffer = req.file.buffer
-    const { data } = await uploadImgToImgUr(imgBuffer)
-    postUpdateData.image = data.data.link
+  // 如果有上傳圖片
+  const uploadFile = req.files[0]
+  if (uploadFile) {
+    const uploadImgBuffer = uploadFile.buffer
+    const { data } = await uploadImg(uploadImgBuffer)
+    postUpdateData.image = data.link
   }
 
   postUpdateData.content = content
