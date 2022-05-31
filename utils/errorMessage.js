@@ -6,7 +6,9 @@ const errorGeneralMessage = {
   'jwt expired': 'Token 過期',
   'invalid token': 'Token 無效',
   'Unexpected end of JSON input': '輸入格式有誤!',
-  SyntaxError: '輸入格式錯誤!'
+  SyntaxError: '輸入格式錯誤!',
+  // multer
+  'File too large': '上傳檔案超過指定容量 (2MB)'
 }
 
 module.exports = errorGeneralMessage

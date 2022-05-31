@@ -41,6 +41,15 @@ const errorHandle = (error, req, res, next) => {
     })
   }
 
+  // multer 錯誤處理
+  if (error.name === 'MulterError') {
+    return errorResponse({
+      res,
+      statusCode: 422,
+      message: errorGeneralMessage[error.message] || error.message
+    })
+  }
+
   if (process.env.NODE_ENV === 'dev') {
     console.log('------------ catch DEV ERROR (start) ------------')
     console.log(error)
@@ -55,10 +64,10 @@ const errorHandle = (error, req, res, next) => {
     // 開發模式: 看到 error.stack
     errors: process.env.NODE_ENV === 'dev'
       ? {
-          name: error.name,
-          message: error.message,
-          stack: error.stack
-        }
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      }
       : undefined
   })
 }
@@ -71,16 +80,16 @@ const errorHandle = (error, req, res, next) => {
  * @return {Constructor} 處理實例
  */
 class ApiError {
-  constructor (statusCode, message) {
+  constructor(statusCode, message) {
     this.statusCode = statusCode
     this.message = message
   }
 
-  static badRequest (statusCode = 400, message) {
+  static badRequest(statusCode = 400, message) {
     return new ApiError(statusCode, message)
   }
 
-  static internalError (statusCode = 500, message) {
+  static internalError(statusCode = 500, message) {
     return new ApiError(statusCode, message)
   }
 }
