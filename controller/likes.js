@@ -14,7 +14,7 @@ const toggleLikes = async (req, res, next) => {
 
   if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(...errorMessage))
 
-  const [alwaysLikesPost] = await User.find({ id: _id, likes: { $in: [postId] } })
+  const [alwaysLikesPost] = await User.find({ _id, likes: { $in: [postId] } })
 
   if (!alwaysLikesPost) {
     resData = await User.findByIdAndUpdate(_id, { $push: { likes: postId } }, { new: true }).select('likes')
