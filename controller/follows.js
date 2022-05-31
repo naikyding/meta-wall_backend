@@ -11,6 +11,7 @@ const followsToggle = async (req, res, next) => {
   if (!followUserId) return next(ApiError.badRequest(400, '請輸入使用者 id'))
   if (!isValidObjectId(followUserId)) return next(ApiError.badRequest(400, '使用者 id 錯誤'))
   if (followUserId === _id) return next(ApiError.badRequest(400, '無法追蹤自已'))
+  if (!await User.findById(followUserId)) return next(ApiError.badRequest(400, '這個使用者 id 不存在'))
 
   // 是否已經追蹤
   const followsIncludes = await User.findOne({
@@ -45,7 +46,6 @@ const followsToggle = async (req, res, next) => {
     }, { new: true }).select('follows')
 
     followerData = await User.findByIdAndUpdate(followUserId, { $push: { follower: _id } }, { new: true }).select('follower')
-
     // eslint-disable-next-line eqeqeq
     const followsUserIncludes = resData.follows.find(item => item.userId == followUserId)
     const followerUserIncludes = followerData.follower.includes(_id)
