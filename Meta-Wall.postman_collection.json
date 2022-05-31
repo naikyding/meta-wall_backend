@@ -43,7 +43,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nickname\": \"Naiky0517\",\n    \"email\": \"0517@gmail.com\",\n    \"password\": \"123123123\",\n    \"passwordConfirm\": \"123123123\"\n}",
+							"raw": "{\n    \"nickname\": \"21\",\n    \"email\": \"0530122@gmail.com\",\n    \"password\": \"11111111a\",\n    \"passwordConfirm\": \"11111111a\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -429,7 +429,7 @@
 							"formdata": [
 								{
 									"key": "content",
-									"value": "好看哦!",
+									"value": "heroku 新增的貼文",
 									"description": "貼文內容",
 									"type": "text"
 								},
@@ -563,7 +563,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "628670551fba52016d706905"
+									"value": "62957cfbf65a99fee3593ff4"
 								}
 							]
 						}
@@ -625,7 +625,7 @@
 							"variable": [
 								{
 									"key": "postId",
-									"value": "6285041352d2a92548925192"
+									"value": "6295b78e1b80bc98849b2f5a"
 								}
 							]
 						}
@@ -825,7 +825,7 @@
 			"name": "Likes",
 			"item": [
 				{
-					"name": "取得最愛貼文",
+					"name": "取得(個人)按讚列表",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -910,7 +910,7 @@
 					]
 				},
 				{
-					"name": "加入/移除 最愛",
+					"name": "加入/移除 按讚",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -1030,7 +1030,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"followUserId\": \"628206bf69a5861311959731\"\n}",
+							"raw": "{\n    \"followUserId\": \"62957cfbf65a99fee3593ff4\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1132,7 +1132,7 @@
 							"variable": [
 								{
 									"key": "postId",
-									"value": "6285041352d2a92548925192"
+									"value": "6295b78e1b80bc98849b2f5a"
 								}
 							]
 						}
