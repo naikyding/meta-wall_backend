@@ -48,7 +48,6 @@ const userLikes = async (req, res, next) => {
         }, {
           path: 'comments',
           ref: 'Comment',
-          select: '-updatedAt -post',
           populate: {
             path: 'user',
             select: 'nickname avatar'

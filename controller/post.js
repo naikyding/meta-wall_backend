@@ -14,13 +14,18 @@ const getUserPost = async (req, res, next) => {
   if (!id) return next(ApiError.badRequest(undefined, '請帶入使用者 id'))
   if (!verifyObjectId(id)) return next(ApiError.badRequest(undefined, '使用者 id 錯誤'))
 
-  const resData = await User.findById(id).populate({
-    path: 'posts',
-    match: { content: keyword },
-    options: {
-      sort: { createdAt: createdAtSort }
-    }
-  }).select('-gender -updatedAt -email')
+  const resData = await User.findById(id)
+    .populate({
+      path: 'posts',
+      match: { content: keyword },
+      options: {
+        sort: { createdAt: createdAtSort }
+      },
+      populate: {
+        path: 'comments',
+        select: 'user'
+      }
+    }).select('-gender -updatedAt -email')
 
   successResponse({
     res,
@@ -127,16 +132,16 @@ const getPostsComments = async (req, res, next) => {
   const postId = req.params.postId
   if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(400, '貼文 id 錯誤'))
 
-  const commentsList = await Post.findById(postId).select('-likes').populate({
-    path: 'comments',
-    ref: 'Comment',
-    select: '-updatedAt -post',
-    populate: {
-      path: 'user',
-      ref: 'User',
-      select: 'nickname avatar'
-    }
-  })
+  const commentsList = await Post.findById(postId).select('-likes')
+    .populate({
+      path: 'comments',
+      select: 'createdAt user content',
+      populate: {
+        path: 'user',
+        ref: 'User',
+        select: 'nickname avatar'
+      }
+    })
 
   successResponse({
     res,

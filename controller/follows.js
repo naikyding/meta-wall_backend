@@ -7,12 +7,14 @@ const { successResponse } = require('../utils/responseHandle')
 const followsToggle = async (req, res, next) => {
   const { followUserId } = req.body
   const { _id } = req.user
+
   if (!followUserId) return next(ApiError.badRequest(400, '請輸入使用者 id'))
   if (!isValidObjectId(followUserId)) return next(ApiError.badRequest(400, '使用者 id 錯誤'))
+  if (followUserId === _id) return next(ApiError.badRequest(400, '無法追蹤自已'))
 
   // 是否已經追蹤
   const followsIncludes = await User.findOne({
-    id: _id,
+    _id,
     'follows.userId': followUserId
   }).select('follows')
 
