@@ -9,6 +9,10 @@ const getPostsList = async (req, res, next) => {
 
   const postList = await Post.find({ content: keyword })
     .populate({
+      path: 'comments',
+      select: 'user'
+    })
+    .populate({
       path: 'user',
       select: 'nickname avatar'
     })
