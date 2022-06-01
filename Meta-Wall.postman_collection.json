@@ -407,6 +407,68 @@
 							"body": "{\n    \"status\": false,\n    \"message\": \"新密碼不得與舊密碼相同!\"\n}"
 						}
 					]
+				},
+				{
+					"name": "追蹤朋友",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id/follows",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id",
+								"follows"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "62957cfbf65a99fee3593ff4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消追蹤朋友",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/:id/follows",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								":id",
+								"follows"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "62957cfbf65a99fee3593ff4"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -626,6 +688,68 @@
 								{
 									"key": "postId",
 									"value": "6295b78e1b80bc98849b2f5a"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "貼文加入按讚",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/:id/likes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								":id",
+								"likes"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "62957ed7f65a99fee3594007"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "貼文移除按讚",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/:id/likes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								":id",
+								"likes"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "62957ed7f65a99fee3594007"
 								}
 							]
 						}
@@ -922,7 +1046,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"postId\": \"6285041352d2a92548925192\"\n}",
+							"raw": "{\n    \"postId\": \"6295b78e1b80bc98849b2f5a\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
