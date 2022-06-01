@@ -45,7 +45,7 @@ const followsToggle = async (req, res, next) => {
       $push: { follows: { userId: followUserId } }
     }, { new: true }).select('follows')
 
-    followerData = await User.findByIdAndUpdate(followUserId, { $push: { follower: _id } }, { new: true }).select('follower')
+    followerData = await User.findByIdAndUpdate(followUserId, { $addToSet: { follower: _id } }, { new: true }).select('follower')
     // eslint-disable-next-line eqeqeq
     const followsUserIncludes = resData.follows.find(item => item.userId == followUserId)
     const followerUserIncludes = followerData.follower.includes(_id)

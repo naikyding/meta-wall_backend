@@ -4,6 +4,7 @@ const { successResponse } = require('../utils/responseHandle')
 const bcrypt = require('bcryptjs')
 const uploadImg = require('../utils/uploadImageToImgur')
 const sizeOf = require('image-size')
+const { isValidObjectId } = require('mongoose')
 
 const userBaseInfo = async (req, res, next) => {
   const errorHandle = () => next(ApiError.badRequest(undefined, '驗証錯誤，請重新登入'))
@@ -79,4 +80,78 @@ const updatePassword = async (req, res, next) => {
   })
 }
 
-module.exports = { userBaseInfo, updateUserBaseInfo, updatePassword }
+const userFollows = async (req, res, next) => {
+  const userId = req.user._id
+  const followsUserId = req.params.userId
+
+  if (!followsUserId || !isValidObjectId(followsUserId)) return next(ApiError.badRequest(400, '追蹤者 id 錯誤'))
+  if (!await User.findById(followsUserId)) return next(ApiError.badRequest(400, '追蹤者 id 不存在!'))
+  const isInclues = await User.findOne({ _id: userId, 'follows.userId': followsUserId })
+  if (isInclues) return next(ApiError.badRequest(400, '使用者已在追蹤名單了!'))
+
+  const userDataStatus = await User.findByIdAndUpdate(userId, {
+    $push: {
+      follows: {
+        userId: followsUserId
+      }
+    }
+  }, { new: true })
+
+  await User.findByIdAndUpdate(followsUserId, {
+    $addToSet: {
+      follower: userId
+    }
+  }, { new: true })
+
+  successResponse({
+    res,
+    message: '加入追蹤',
+    data: {
+      user: {
+        follows: userDataStatus.follows
+      }
+    }
+  })
+}
+
+const unUserFollows = async (req, res, next) => {
+  const userId = req.user._id
+  const followsUserId = req.params.userId
+
+  if (!followsUserId || !isValidObjectId(followsUserId)) return next(ApiError.badRequest(400, '追蹤者 id 錯誤'))
+  if (!await User.findById(followsUserId)) return next(ApiError.badRequest(400, '追蹤者 id 不存在!'))
+  const isInclues = await User.findOne({ _id: userId, 'follows.userId': followsUserId })
+  if (!isInclues) return next(ApiError.badRequest(400, '使用者本來就不在追蹤名單了!'))
+
+  const newUserStatus = await User.findByIdAndUpdate(userId, {
+    $pull: {
+      follows: {
+        userId: followsUserId
+      }
+    }
+  }, { new: true })
+
+  await User.findByIdAndUpdate(followsUserId, {
+    $pull: {
+      follower: newUserStatus._id
+    }
+  }, { new: true })
+
+  successResponse({
+    res,
+    message: '移除追蹤',
+    data: {
+      user: {
+        follows: newUserStatus.follows
+      }
+    }
+  })
+}
+
+module.exports = {
+  userBaseInfo,
+  updateUserBaseInfo,
+  updatePassword,
+  userFollows,
+  unUserFollows
+}
