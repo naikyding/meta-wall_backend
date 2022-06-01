@@ -149,11 +149,74 @@ const getPostsComments = async (req, res, next) => {
   })
 }
 
+const postLikes = async (req, res, next) => {
+  const postId = req.params.postId
+  const userId = req.user._id
+  if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(400, '貼文 id 錯誤'))
+  const inPost = await Post.findById(postId)
+  if (!inPost) return next(ApiError.badRequest(400, '貼文 id 不存在!'))
+
+  const newPostStatus = await Post.findByIdAndUpdate(postId, {
+    $addToSet: {
+      likes: userId
+    }
+  }, { new: true })
+
+  const newUserStatus = await User.findByIdAndUpdate(userId, {
+    $addToSet: {
+      likes: newPostStatus._id
+    }
+  }, { new: true })
+
+  successResponse({
+    res,
+    message: '已按讚貼文',
+    data: {
+      user: {
+        likes: newUserStatus.likes
+      }
+    }
+  })
+}
+const unPostLikes = async (req, res, next) => {
+  const postId = req.params.postId
+  const userId = req.user._id
+  if (!postId || !verifyObjectId(postId)) return next(ApiError.badRequest(400, '貼文 id 錯誤'))
+  const inPost = await Post.findById(postId)
+  if (!inPost) return next(ApiError.badRequest(400, '貼文 id 不存在!'))
+  const isIncludesLikes = await User.findOne({ _id: userId, likes: { $in: [postId] } })
+  if (!isIncludesLikes) return next(ApiError.badRequest(400, '貼文本來就不存在按讚列表'))
+
+  const newPostStatus = await Post.findByIdAndUpdate(postId, {
+    $pull: {
+      likes: userId
+    }
+  }, { new: true })
+
+  const newUserStatus = await User.findByIdAndUpdate(userId, {
+    $pull: {
+      likes: newPostStatus._id
+    }
+  }, { new: true })
+
+  successResponse({
+    res,
+    message: '貼文已移除按讚',
+    data: {
+      user: {
+        likes: newUserStatus.likes
+      }
+    }
+  })
+}
+
 module.exports = {
   creatPost,
   deletePost,
   updatePost,
   getUserPost,
   getPostsLikes,
-  getPostsComments
+  getPostsComments,
+  postLikes,
+  unPostLikes
 }
