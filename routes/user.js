@@ -1,7 +1,10 @@
 const { Router } = require('express')
 const { auth } = require('../utils/auth')
 const { apiCatch } = require('../utils/errorHandle')
-const { userBaseInfo, updateUserBaseInfo, updatePassword } = require('../controller/user')
+const {
+  userBaseInfo, updateUserBaseInfo, updatePassword,
+  userFollows, unUserFollows
+} = require('../controller/user')
 const postFiles = require('../utils/formFiles')
 
 const router = Router()
@@ -14,5 +17,8 @@ router.patch('/', auth, postFiles, apiCatch(updateUserBaseInfo))
 
 // 修改使用者密碼
 router.patch('/update_password', auth, apiCatch(updatePassword))
+
+router.post('/:userId/follows', auth, apiCatch(userFollows))
+router.delete('/:userId/follows', auth, apiCatch(unUserFollows))
 
 module.exports = router
