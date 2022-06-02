@@ -50,6 +50,15 @@ const errorHandle = (error, req, res, next) => {
     })
   }
 
+  // JWT 錯誤處理
+  if (error.name === 'JsonWebTokenError') {
+    return errorResponse({
+      res,
+      statusCode: 422,
+      message: errorGeneralMessage[error.message] || error.message
+    })
+  }
+
   if (process.env.NODE_ENV === 'dev') {
     console.log('------------ catch DEV ERROR (start) ------------')
     console.log(error)

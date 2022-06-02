@@ -9,8 +9,8 @@ const errorGeneralMessage = require('./errorMessage')
  * @param {String} exp='7d' 有效期 (預設 7 天)
  * @returns {String} Token 令牌
  */
-const generatorToken = (payload, exp = '7d') =>
-  JWT.sign(payload, process.env.JWT_SECRET, { expiresIn: exp })
+const generatorToken = (payload, exp = '7d', secret = process.env.JWT_SECRET) =>
+  JWT.sign(payload, secret, { expiresIn: exp })
 
 /**
  * 驗證 token 令牌
