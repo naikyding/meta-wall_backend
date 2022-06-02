@@ -6,6 +6,7 @@ const { generatorToken } = require('../utils/auth')
 const { isEmail } = require('validator')
 const JWT = require('jsonwebtoken')
 const { verifyObjectId } = require('../utils/mongoose')
+const mail = require('../utils/mail')
 
 const checkToken = async (req, res, next) => {
   res.status(200).send({ status: true, user: req.user })
@@ -84,7 +85,7 @@ const forgotPassword = async (req, res, next) => {
   if (!email) return next(ApiError.badRequest(400, '請填入 email'))
   if (!isEmail(email)) return next(ApiError.badRequest(400, 'email 格式錯誤'))
 
-  const user = await User.findOne({ email }).select('password email')
+  const user = await User.findOne({ email }).select('password email nickname')
   if (!user) return next(ApiError.badRequest(400, '帳戶不存在!'))
 
   const payload = { _id: user._id, email: user.email }
@@ -92,6 +93,8 @@ const forgotPassword = async (req, res, next) => {
   const newToken = generatorToken(payload, '15m', secret)
 
   const redirectUrl = `${process.env.APP_DOMAIN}reset-password/${user._id}/${newToken}`
+
+  await mail(email, user.nickname, redirectUrl)
 
   successResponse({
     res,
