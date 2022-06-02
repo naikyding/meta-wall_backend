@@ -3,6 +3,10 @@ const { ApiError } = require('../utils/errorHandle')
 const { successResponse } = require('../utils/responseHandle')
 const bcrypt = require('bcryptjs')
 const { generatorToken } = require('../utils/auth')
+const { isEmail } = require('validator')
+const JWT = require('jsonwebtoken')
+const { verifyObjectId } = require('../utils/mongoose')
+const mail = require('../utils/mail')
 
 const checkToken = async (req, res, next) => {
   res.status(200).send({ status: true, user: req.user })
@@ -76,4 +80,61 @@ const login = async (req, res, next) => {
   })
 }
 
-module.exports = { checkToken, register, login }
+const forgotPassword = async (req, res, next) => {
+  const { email } = req.body
+  if (!email) return next(ApiError.badRequest(400, '請填入 email'))
+  if (!isEmail(email)) return next(ApiError.badRequest(400, 'email 格式錯誤'))
+
+  const user = await User.findOne({ email }).select('password email nickname')
+  if (!user) return next(ApiError.badRequest(400, '帳戶不存在!'))
+
+  const payload = { _id: user._id, email: user.email }
+  const secret = process.env.JWT_SECRET + user.password
+  const newToken = generatorToken(payload, '15m', secret)
+
+  const redirectUrl = `${process.env.APP_DOMAIN}reset-password/${user._id}/${newToken}`
+
+  await mail(email, user.nickname, redirectUrl)
+
+  successResponse({
+    res,
+    message: `驗證信已發送至 ${user.email}`,
+    data: { redirectUrl }
+  })
+}
+
+const resetPassword = async (req, res, next) => {
+  const { password, passwordConfirm, userId, token } = req.body
+
+  if (!userId || !token) return next(ApiError.badRequest(400, '驗証資料錯誤'))
+  if (!verifyObjectId(userId)) return next(ApiError.badRequest(400, '錯誤的使用者 id'))
+  if (!password || !passwordConfirm) return next(ApiError.badRequest(400, '請完整填寫密碼'))
+  if (password !== passwordConfirm) return next(ApiError.badRequest(400, '輸入密碼不一致!'))
+  if (password.length < 8) return next(ApiError.badRequest(400, '密碼長度不得少於 8 碼'))
+  if (!/^([a-zA-Z]+\d+|\d+[a-zA-Z]+)[a-zA-Z0-9]*$/.test(password)) return next(ApiError.badRequest(400, '密碼必須英數混合'))
+
+  const user = await User.findById(userId).select('password')
+  if (!user) return next(ApiError.badRequest(400, '使用者不存在'))
+
+  // 新密碼與舊密碼相同
+  const passwordInclude = bcrypt.compareSync(password, user.password)
+  if (passwordInclude) return next(ApiError.badRequest(400, '新密碼不得與舊密碼相同!'))
+
+  const JWTPayload = JWT.verify(token, process.env.JWT_SECRET + user.password)
+  if (JWTPayload._id !== userId) return next(ApiError.badRequest(400, '錯誤的使用者 id'))
+
+  // 更新密碼
+  const newUserData = await User.findOneAndUpdate({ _id: JWTPayload._id, email: JWTPayload.email }, {
+    password: bcrypt.hashSync(password, 12)
+  })
+
+  successResponse({
+    res,
+    message: '密碼重置成功，請重新登入',
+    data: {
+      user: newUserData._id
+    }
+  })
+}
+
+module.exports = { checkToken, register, login, forgotPassword, resetPassword }

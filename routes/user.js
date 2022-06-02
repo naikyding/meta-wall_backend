@@ -17,7 +17,6 @@ router.patch('/', auth, postFiles, apiCatch(updateUserBaseInfo))
 
 // 修改使用者密碼
 router.patch('/update_password', auth, apiCatch(updatePassword))
-
 router.post('/:userId/follows', auth, apiCatch(userFollows))
 router.delete('/:userId/follows', auth, apiCatch(unUserFollows))
 
