@@ -76,4 +76,11 @@ const login = async (req, res, next) => {
   })
 }
 
-module.exports = { checkToken, register, login }
+const forgotPassword = async (req, res, next) => {
+  successResponse({
+    res,
+    message: '忘記密碼'
+  })
+}
+
+module.exports = { checkToken, register, login, forgotPassword }
