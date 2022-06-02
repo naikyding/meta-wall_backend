@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const { auth } = require('../utils/auth')
 const { apiCatch } = require('../utils/errorHandle')
-const { checkToken, register, login, forgotPassword } = require('../controller/auth')
+const { checkToken, register, login, forgotPassword, resetPassword } = require('../controller/auth')
 
 const router = Router()
 
@@ -16,5 +16,7 @@ router.post('/login', apiCatch(login))
 
 // forgot password
 router.post('/forgot-password', apiCatch(forgotPassword))
+
+router.patch('/reset_password', apiCatch(resetPassword))
 
 module.exports = router

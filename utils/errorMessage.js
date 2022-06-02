@@ -8,7 +8,8 @@ const errorGeneralMessage = {
   'Unexpected end of JSON input': '輸入格式有誤!',
   SyntaxError: '輸入格式錯誤!',
   // multer
-  'File too large': '上傳檔案超過指定容量 (2MB)'
+  'File too large': '上傳檔案超過指定容量 (2MB)',
+  'invalid signature': '無效的 token'
 }
 
 module.exports = errorGeneralMessage
