@@ -19,5 +19,8 @@ router.post('/forgot-password', apiCatch(forgotPassword))
 router.patch('/reset_password', apiCatch(resetPassword))
 
 router.get('/google', apiCatch(authGoogle))
+router.get('/google/callback', async (req, res, next) => {
+
+})
 
 module.exports = router
