@@ -137,4 +137,11 @@ const resetPassword = async (req, res, next) => {
   })
 }
 
-module.exports = { checkToken, register, login, forgotPassword, resetPassword }
+const authGoogle = async (req, res, next) => {
+  successResponse({
+    res,
+    message: 'google auth'
+  })
+}
+
+module.exports = { checkToken, register, login, forgotPassword, resetPassword, authGoogle }
