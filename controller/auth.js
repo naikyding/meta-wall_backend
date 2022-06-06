@@ -140,7 +140,8 @@ const resetPassword = async (req, res, next) => {
 const authGoogle = async (req, res, next) => {
   successResponse({
     res,
-    message: 'google auth'
+    message: '取得成功',
+    data: req.user
   })
 }
 
