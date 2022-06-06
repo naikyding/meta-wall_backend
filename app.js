@@ -6,6 +6,7 @@ const { errorHandle } = require('./utils/errorHandle')
 require('dotenv').config()
 const metaWallConnect = require('./db/metaWall')
 const cors = require('cors')
+require('./utils/passports')
 
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
