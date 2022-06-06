@@ -138,11 +138,11 @@ const resetPassword = async (req, res, next) => {
 }
 
 const authGoogle = async (req, res, next) => {
-  successResponse({
-    res,
-    message: '取得成功',
-    data: req.user
-  })
+  const { _id, nickname, avatar } = req.user
+  const payload = { _id, nickname, avatar }
+  const token = generatorToken(payload)
+
+  res.redirect(`${process.env.APP_DOMAIN}login?name=${nickname}&token=${token}`)
 }
 
 module.exports = { checkToken, register, login, forgotPassword, resetPassword, authGoogle }
