@@ -21,7 +21,7 @@ router.patch('/reset_password', apiCatch(resetPassword))
 router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }))
 router.get(
   '/google/callback',
-  passport.authenticate('google', { session: false, failureRedirect: 'https://www.google.com.tw' }),
+  passport.authenticate('google', { session: false, failureRedirect: `${process.env.APP_DOMAIN}login` }),
   apiCatch(authGoogle)
 )
 
