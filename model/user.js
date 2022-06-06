@@ -65,6 +65,10 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
     select: false
+  },
+  googleId: {
+    type: String,
+    select: false
   }
 }, {
   versionKey: false,

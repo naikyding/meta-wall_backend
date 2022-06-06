@@ -28,7 +28,8 @@
     "formulahendry.auto-rename-tag",
     "formulahendry.auto-close-tag",
     "naumovs.color-highlight",
-    "mongodb.mongodb-vscode"
+    "mongodb.mongodb-vscode",
+    "streetsidesoftware.code-spell-checker"
   ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
