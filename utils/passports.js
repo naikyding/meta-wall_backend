@@ -6,7 +6,9 @@ const bcrypt = require('bcryptjs')
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
   clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3000/auth/google/callback'
+  callbackURL: `${process.env.NODE_ENV === 'dev'
+    ? 'http://localhost:3000'
+    : process.env.NODE_APP_DOMAIN}/auth/google/callback`
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     let userData = {}
