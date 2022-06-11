@@ -11,11 +11,11 @@ const postFiles = require('../utils/formFiles')
 
 router.get('/:id', auth, apiCatch(getUserPost))
 
-router.post('/', auth, postFiles, apiCatch(creatPost))
+router.post('/', postFiles, auth, apiCatch(creatPost))
 
 router.delete('/:id', auth, apiCatch(deletePost))
 
-router.patch('/:id', auth, postFiles, apiCatch(updatePost))
+router.patch('/:id', postFiles, auth, apiCatch(updatePost))
 
 router.get('/likes/:postId', auth, apiCatch(getPostsLikes))
 

@@ -12,6 +12,6 @@ router.get('/', function (req, res, next) {
 })
 
 // 圖片上傳
-router.post('/avatar-img-upload', auth, postFiles, apiCatch(avatarImgUpload))
+router.post('/avatar-img-upload', postFiles, auth, apiCatch(avatarImgUpload))
 
 module.exports = router
