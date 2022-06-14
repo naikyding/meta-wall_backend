@@ -22,7 +22,9 @@ passport.use(new GoogleStrategy({
         password: googleIdHash,
         googleId: googleIdHash
       })
-    } else userData = filterUserData
+    } else {
+      userData = filterUserData
+    }
 
     done(null, userData)
   } catch (error) {
