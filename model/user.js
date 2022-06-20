@@ -69,6 +69,10 @@ const userSchema = new Schema({
   googleId: {
     type: String,
     select: false
+  },
+  facebookId: {
+    type: String,
+    select: false
   }
 }, {
   versionKey: false,
