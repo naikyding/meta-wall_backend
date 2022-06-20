@@ -3,9 +3,10 @@ const { auth } = require('../utils/auth')
 const { apiCatch } = require('../utils/errorHandle')
 const {
   checkToken, register, login, forgotPassword, resetPassword,
-  authGoogle
+  authGoogle, authFacebook
 } = require('../controller/auth')
 const passport = require('passport')
+const authFacebookMiddleWare = require('../service/authFacebook')
 const router = Router()
 
 router.get('/check_token', auth, apiCatch(checkToken))
@@ -24,5 +25,12 @@ router.get(
   passport.authenticate('google', { session: false, failureRedirect: `${process.env.APP_DOMAIN}login` }),
   apiCatch(authGoogle)
 )
+
+router.get('/facebook', authFacebookMiddleWare.authenticate('facebook', { scope: ['email', 'public_profile'] }))
+
+router.get(
+  '/facebook/callback',
+  authFacebookMiddleWare.authenticate('facebook', { session: false, failureRedirect: `${process.env.APP_DOMAIN}login` }),
+  apiCatch(authFacebook))
 
 module.exports = router

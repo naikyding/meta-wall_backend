@@ -145,4 +145,12 @@ const authGoogle = async (req, res, next) => {
   res.redirect(`${process.env.APP_DOMAIN}login?name=${nickname}&token=${token}`)
 }
 
-module.exports = { checkToken, register, login, forgotPassword, resetPassword, authGoogle }
+const authFacebook = async (req, res, next) => {
+  const { _id, nickname, avatar } = req.user
+  const payload = { _id, nickname, avatar }
+  const token = generatorToken(payload)
+
+  res.redirect(`${process.env.APP_DOMAIN}login?name=${nickname}&token=${token}`)
+}
+
+module.exports = { checkToken, register, login, forgotPassword, resetPassword, authGoogle, authFacebook }
