@@ -72,11 +72,7 @@ const errorHandle = (error, req, res, next) => {
     message: 'Something went wong!',
     // 開發模式: 看到 error.stack
     errors: process.env.NODE_ENV === 'dev'
-      ? {
-        name: error.name,
-        message: error.message,
-        stack: error.stack
-      }
+      ? { name: error.name, message: error.message, stack: error.stack }
       : undefined
   })
 }
