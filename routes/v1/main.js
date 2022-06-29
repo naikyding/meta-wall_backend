@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const postFiles = require('../utils/formFiles')
+const postFiles = require('../../utils/formFiles')
 
-const { auth } = require('../utils/auth')
-const { avatarImgUpload } = require('../controller/upload')
-const { apiCatch } = require('../utils/errorHandle')
+const { auth } = require('../../utils/auth')
+const { avatarImgUpload } = require('../../controller/upload')
+const { apiCatch } = require('../../utils/errorHandle')
 
 /* GET home page. */
 router.get('/', (req, res, next) => {

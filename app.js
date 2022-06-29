@@ -17,6 +17,8 @@ const likesRouter = require('./routes/likes')
 const followsRouter = require('./routes/follows')
 const commentsRouter = require('./routes/comments.js')
 
+const v1Routes = require('./routes/v1')
+
 const app = express()
 
 app.use(logger('dev'))
@@ -36,6 +38,8 @@ app.use('/posts', postsRouter)
 app.use('/likes', likesRouter)
 app.use('/follows', followsRouter)
 app.use('/comments', commentsRouter)
+
+app.use('/v1', v1Routes)
 
 // Error Handle
 app.use((req, res) => res.status(404).send('Not Found'))
