@@ -6,11 +6,11 @@ const uploadImg = require('../utils/uploadImageToImgur')
 const { verifyObjectId } = require('../utils/mongoose')
 
 const getUserPost = async (req, res, next) => {
-  const { q, s } = req.query
-  const keyword = new RegExp(q)
-  const createdAtSort = (s && s === 'o') ? 1 : -1 // o: 舊到新
+  const { q: query, s: sort } = req.query
+  const keyword = new RegExp(query)
+  const createdAtSort = (sort === 'o') ? 1 : -1 // o: 舊到新
 
-  const id = req.params.id
+  const { id } = req.params
   if (!id) return next(ApiError.badRequest(undefined, '請帶入使用者 id'))
   if (!verifyObjectId(id)) return next(ApiError.badRequest(undefined, '使用者 id 錯誤'))
 
@@ -33,7 +33,7 @@ const getUserPost = async (req, res, next) => {
   })
 }
 
-const creatPost = async (req, res, next) => {
+const createPost = async (req, res, next) => {
   const post = {}
   const { content } = req.body
   const id = req.user._id
@@ -211,7 +211,7 @@ const unPostLikes = async (req, res, next) => {
 }
 
 module.exports = {
-  creatPost,
+  createPost,
   deletePost,
   updatePost,
   getUserPost,
