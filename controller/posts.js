@@ -3,9 +3,9 @@ const Post = require('../model/post')
 const { ApiError } = require('../utils/errorHandle')
 
 const getPostsList = async (req, res, next) => {
-  const { q, s } = req.query
-  const keyword = new RegExp(q)
-  const createdAtSort = (s && s === 'o') ? 1 : -1 // o: 舊到新
+  const { q: query, s: sort } = req.query
+  const keyword = new RegExp(query)
+  const createdAtSort = (sort === 'o') ? 1 : -1 // o: 舊到新
 
   const postList = await Post.find({ content: keyword })
     .populate({

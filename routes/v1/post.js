@@ -1,13 +1,13 @@
 const { Router } = require('express')
 const router = Router()
-const { apiCatch } = require('../utils/errorHandle')
-const { auth } = require('../utils/auth')
+const { apiCatch } = require('../../utils/errorHandle')
+const { auth } = require('../../utils/auth')
 const {
   createPost, deletePost, updatePost, getUserPost,
   getPostsLikes, getPostsComments,
   postLikes, unPostLikes
-} = require('../controller/post')
-const postFiles = require('../utils/formFiles')
+} = require('../../controller/post')
+const postFiles = require('../../utils/formFiles')
 
 router.get('/:id', auth, apiCatch(getUserPost))
 
