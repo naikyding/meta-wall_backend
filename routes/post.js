@@ -3,7 +3,7 @@ const router = Router()
 const { apiCatch } = require('../utils/errorHandle')
 const { auth } = require('../utils/auth')
 const {
-  creatPost, deletePost, updatePost, getUserPost,
+  createPost, deletePost, updatePost, getUserPost,
   getPostsLikes, getPostsComments,
   postLikes, unPostLikes
 } = require('../controller/post')
@@ -11,7 +11,7 @@ const postFiles = require('../utils/formFiles')
 
 router.get('/:id', auth, apiCatch(getUserPost))
 
-router.post('/', postFiles, auth, apiCatch(creatPost))
+router.post('/', postFiles, auth, apiCatch(createPost))
 
 router.delete('/:id', auth, apiCatch(deletePost))
 

@@ -13,6 +13,10 @@
     },
     "eslint.validate": [
       "javascript"
+    ],
+    "cSpell.ignorePaths": [
+      "*.example",
+      "devcontainer.json"
     ]
   },
   // Add the IDs of extensions you want installed when the container is created.
