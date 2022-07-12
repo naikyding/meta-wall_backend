@@ -66,17 +66,19 @@ const errorHandle = (error, req, res, next) => {
   }
 
   // 未知錯誤
+  console.log('--------------------- errors ---------------------')
+  console.log({ name: error.name, message: error.message, stack: error.stack })
+  console.log('--------------------- errors ---------------------')
+
   errorResponse({
     res,
     statusCode: 500,
     message: 'Something went wong!',
-    // 開發模式: 看到 error.stack
-    errors: { name: error.name, message: error.message, stack: error.stack }
 
-    // // 開發模式: 看到 error.stack
-    // errors: process.env.NODE_ENV === 'dev'
-    //   ? { name: error.name, message: error.message, stack: error.stack }
-    //   : undefined
+    // 開發模式: 看到 error.stack
+    errors: process.env.NODE_ENV === 'dev'
+      ? { name: error.name, message: error.message, stack: error.stack }
+      : undefined
   })
 }
 
