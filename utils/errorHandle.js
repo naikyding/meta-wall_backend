@@ -71,9 +71,12 @@ const errorHandle = (error, req, res, next) => {
     statusCode: 500,
     message: 'Something went wong!',
     // 開發模式: 看到 error.stack
-    errors: process.env.NODE_ENV === 'dev'
-      ? { name: error.name, message: error.message, stack: error.stack }
-      : undefined
+    errors: { name: error.name, message: error.message, stack: error.stack }
+
+    // // 開發模式: 看到 error.stack
+    // errors: process.env.NODE_ENV === 'dev'
+    //   ? { name: error.name, message: error.message, stack: error.stack }
+    //   : undefined
   })
 }
 
