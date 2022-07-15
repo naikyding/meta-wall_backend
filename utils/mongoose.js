@@ -1,6 +1,6 @@
-const { isValidObjectId } = require('mongoose')
+const { isObjectIdOrHexString } = require('mongoose')
 
-const verifyObjectId = (objectId) => isValidObjectId(objectId)
+const verifyObjectId = (objectId) => isObjectIdOrHexString(objectId)
 
 module.exports = {
   verifyObjectId

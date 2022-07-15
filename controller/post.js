@@ -62,13 +62,28 @@ const createPost = async (req, res, next) => {
 }
 
 const deletePost = async (req, res, next) => {
-  const errorHandle = () => next(ApiError.badRequest(undefined, '刪除失敗，請確認貼文 id'))
-
+  const errorHandle = () => next(ApiError.badRequest(400, '刪除失敗，請確認貼文 id'))
   const postId = req.params.id
+
   if (!postId || !verifyObjectId(postId)) return errorHandle()
 
+  // 刪除文章
   const deletePost = await Post.findByIdAndDelete(postId)
   if (!deletePost) return errorHandle()
+
+  // 刪除 user.posts
+  await User.findOneAndUpdate({
+    posts: { $in: postId }
+  }, {
+    $pull: { posts: postId }
+  }, { new: true })
+
+  // 刪除 user.likes
+  await User.updateMany({
+    likes: { $in: postId }
+  }, {
+    $pull: { likes: postId }
+  }, { new: true })
 
   successResponse({
     res,
@@ -76,7 +91,6 @@ const deletePost = async (req, res, next) => {
   })
 }
 
-// TODO 文章移除後，移除使用者 posts
 const updatePost = async (req, res, next) => {
   const postUpdateData = {}
   const postId = req.params.id
@@ -178,6 +192,7 @@ const postLikes = async (req, res, next) => {
     }
   })
 }
+
 const unPostLikes = async (req, res, next) => {
   const postId = req.params.postId
   const userId = req.user._id

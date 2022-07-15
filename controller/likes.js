@@ -17,8 +17,8 @@ const toggleLikes = async (req, res, next) => {
   const [alwaysLikesPost] = await User.find({ _id, likes: { $in: [postId] } })
 
   if (!alwaysLikesPost) {
-    resData = await User.findByIdAndUpdate(_id, { $push: { likes: postId } }, { new: true }).select('likes')
-    await Post.findByIdAndUpdate(postId, { $push: { likes: _id } }, { new: true }).select('likes')
+    resData = await User.findByIdAndUpdate(_id, { $addToSet: { likes: postId } }, { new: true }).select('likes')
+    await Post.findByIdAndUpdate(postId, { $addToSet: { likes: _id } }, { new: true }).select('likes')
     message = '按讚成功'
   } else {
     resData = await User.findByIdAndUpdate(_id, { $pull: { likes: postId } }, { new: true }).select('likes')
