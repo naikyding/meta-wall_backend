@@ -9,6 +9,7 @@ const followsRoutes = require('./follows')
 const postRoutes = require('./post')
 const postsRoutes = require('./posts')
 const indexRoutes = require('./main')
+const payment = require('./payment')
 
 const routes = [
   {
@@ -42,6 +43,10 @@ const routes = [
   {
     path: '/posts',
     router: postsRoutes
+  },
+  {
+    path: '/payment',
+    router: payment
   }
 ]
 
