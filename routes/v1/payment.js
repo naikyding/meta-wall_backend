@@ -1,6 +1,9 @@
 const { Router } = require('express')
 const router = Router()
 
-router.post('/line', (req, res) => {
+const { linePay } = require('../../controller/payment')
+const { apiCatch } = require('../../utils/errorHandle')
 
-})
+router.post('/line', apiCatch(linePay))
+
+module.exports = router
