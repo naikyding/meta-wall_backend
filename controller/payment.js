@@ -1,19 +1,24 @@
 const hmacSHA256 = require('crypto-js/hmac-sha256')
 const Base64 = require('crypto-js/enc-base64')
 const axios = require('axios')
+const { ApiError } = require('../utils/errorHandle')
 
 // LINE PAY 支付
-const linePay = async(req, res) => {
-  const lineId = process.env.LINE_PAY_CHANEL_ID
-  const lineSecret = process.env.LINE_PAY_CHANEL_SECRET_KEY
+const linePay = async(req, res, next) => {
   const timestamp = new Date().getTime()
-  const uri = '/v3/payments/request'
+
+  const {
+    LINE_PAY_CHANEL_ID: lineId,
+    LINE_PAY_CHANEL_SECRET_KEY: lineSecret,
+    LINE_PAY_API_URI: uri,
+    APP_DOMAIN: webAppUrl
+  } = process.env
 
   const body = req.body
   body.orderId = timestamp
   body.redirectUrls = {
-    confirmUrl: 'https://www.google.com',
-    cancelUrl: 'https://www.yahoo.com'
+    confirmUrl: webAppUrl,
+    cancelUrl: webAppUrl
   }
   const bodyString = JSON.stringify(body)
 
@@ -28,6 +33,8 @@ const linePay = async(req, res) => {
       'X-LINE-Authorization': signature
     }
   })
+
+  if (data.returnCode !== '0000') return next(ApiError.badRequest(500, '發生錯誤，請重試'))
 
   res.send(data)
 }
