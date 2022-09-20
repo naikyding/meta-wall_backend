@@ -17,7 +17,9 @@
     "cSpell.ignorePaths": [
       "*.example",
       "devcontainer.json"
-    ]
+    ],
+    // 函式滾動貼頂
+    "editor.stickyScroll.enabled": true
   },
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
