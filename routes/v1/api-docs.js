@@ -9,7 +9,7 @@ const docs = () => ({
     version: 'v1.0.0'
   },
 
-  host: isDev ? 'localhost:3000' : process.env.NODE_APP_DOMAIN,
+  host: isDev ? 'localhost:3000' : 'metawall-evo.herokuapp.com',
   basePath: '/v1',
   schemes: [isDev ? 'http' : 'https'],
   consumes: ['application/json'],
