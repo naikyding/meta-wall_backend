@@ -35,11 +35,14 @@ const docs = () => ({
           200: {
             description: '登入成功',
             schema: {
-              $ref: '#/definitions/UserLoginData'
+              $ref: '#/definitions/UserLoginDataSuccess'
             }
           },
           401: {
-            description: '登入失敗'
+            description: '登入失敗',
+            schema: {
+              $ref: '#/definitions/UserLoginDataFail'
+            }
           }
         }
       }
@@ -67,16 +70,18 @@ const docs = () => ({
     },
 
     // 使用者登入成功資料
-    UserLoginData: {
+    UserLoginDataSuccess: {
       type: 'object',
       properties: {
         status: {
           type: 'boolean',
-          description: '響應狀態'
+          description: '響應狀態',
+          example: true
         },
         message: {
           type: 'string',
-          description: '響應信息'
+          description: '響應信息',
+          example: '登入成功'
         },
         data: {
           type: 'object',
@@ -86,29 +91,50 @@ const docs = () => ({
               properties: {
                 id: {
                   type: 'string',
-                  description: '使用者 ID'
+                  description: '使用者 ID',
+                  example: '62957cfbf65a99fee3593xxx'
                 },
                 nickname: {
                   type: 'string',
-                  description: '使用者綽號'
+                  description: '使用者綽號',
+                  example: 'Dev'
                 },
                 avatar: {
                   type: 'string',
-                  description: '使用者頭像'
+                  description: '使用者頭像',
+                  example: 'https://i.imgur.com/ynrKsDu.jpg'
                 },
                 tokenType: {
                   type: 'string',
-                  description: '使用者 token 型式'
+                  description: '使用者 token 型式',
+                  example: 'Bearer '
                 },
                 token: {
                   type: 'string',
-                  description: '使用者 token'
+                  description: '使用者 token',
+                  example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2Mjk1N2NmYmY2NWE5OWZlZTM1OTNmZjQiLCJuaWNrbmFtZSI6IkRFViIsImF2YXRhciI6Imh0dHBzOi8vaS5pbWd1ci5jb20veW5yS3NEdS5qcGciLCJpYXQiOjE2NjQxODMxNDEsImV4cCI6MTY2NDc4Nzk0MX0.SUcGIITbsbaCDhke-KeFwBNGVlhagV6mlMeJGZ1Ad3c'
                 }
               }
 
             }
           }
 
+        }
+      }
+    },
+
+    UserLoginDataFail: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'boolean',
+          description: '響應狀態',
+          example: false
+        },
+        message: {
+          type: 'string',
+          description: '響應信息',
+          example: '電子信箱或密碼錯誤。'
         }
       }
     }
