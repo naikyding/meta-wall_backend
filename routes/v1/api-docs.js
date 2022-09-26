@@ -1,3 +1,5 @@
+const isDev = process.env.NODE_ENV === 'dev'
+
 const docs = () => ({
   swagger: '2.0',
 
@@ -7,11 +9,9 @@ const docs = () => ({
     version: 'v1.0.0'
   },
 
-  host: process.env.NODE_ENV === 'dev'
-    ? 'localhost:3000'
-    : process.env.NODE_APP_DOMAIN,
+  host: isDev ? 'localhost:3000' : process.env.NODE_APP_DOMAIN,
   basePath: '/v1',
-  schemes: ['http', 'https'],
+  schemes: [isDev ? 'http' : 'https'],
   consumes: ['application/json'],
 
   paths: {
