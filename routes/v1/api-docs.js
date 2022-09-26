@@ -1,25 +1,28 @@
 const isDev = process.env.NODE_ENV === 'dev'
 
 const docs = () => ({
-  swagger: '2.0',
+  swagger: '2.0', // swagger 版本
 
+  // 說明區塊
   info: {
-    title: 'MetaWall APIs',
-    description: '這是 MetaWall API 的說明文件',
-    version: 'v1.0.0'
+    title: 'MetaWall APIs', // 標題
+    description: '這是 MetaWall API 的說明文件', // 說明
+    version: 'v1.0.0' // 版號
   },
 
-  host: isDev ? 'localhost:3000' : 'metawall-evo.herokuapp.com',
-  basePath: '/v1',
-  schemes: [isDev ? 'http' : 'https'],
-  consumes: ['application/json'],
+  host: isDev ? 'localhost:3000' : 'metawall-evo.herokuapp.com', // api url
+  basePath: '/v1', // 基礎路由
+  schemes: [isDev ? 'http' : 'https'], // 請求方式
+  consumes: ['application/json'], // 請求格式
 
+  // 請求路由
   paths: {
-    '/auth/login': {
-      post: {
-        tags: ['Auth'],
-        summary: '使用者登入',
-        description: '使用者登入 api 說明',
+    '/auth/login': { // 請求 router
+      post: { // 方法
+        tags: ['Auth'], // 分類
+        summary: '使用者登入', // 標題
+        description: '使用者登入 api 說明', // 說明
+        // 請求內容
         parameters: [
           {
             name: 'Body',
