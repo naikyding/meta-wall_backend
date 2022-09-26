@@ -69,7 +69,7 @@ const docs = () => ({
       required: ['email', 'password']
     },
 
-    // 使用者登入成功資料
+    // [成功] 使用者登入資料
     UserLoginDataSuccess: {
       type: 'object',
       properties: {
@@ -123,6 +123,7 @@ const docs = () => ({
       }
     },
 
+    // [失敗] 使用者登入資料
     UserLoginDataFail: {
       type: 'object',
       properties: {
