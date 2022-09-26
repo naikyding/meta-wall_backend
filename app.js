@@ -8,6 +8,9 @@ const metaWallConnect = require('./db/metaWall')
 const cors = require('cors')
 require('./utils/passports')
 
+const swaggerUi = require('swagger-ui-express')
+const swaggerApiDocs = require('./routes/v1/api-docs.js')
+
 const indexRouter = require('./routes/index')
 const authRouter = require('./routes/auth')
 const userRouter = require('./routes/user')
@@ -40,6 +43,7 @@ app.use('/follows', followsRouter)
 app.use('/comments', commentsRouter)
 
 app.use('/v1', v1Routes)
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerApiDocs))
 
 // Error Handle
 app.use((req, res) => res.status(404).send('Not Found'))
