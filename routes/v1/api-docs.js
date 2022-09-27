@@ -1,25 +1,53 @@
 const isDev = process.env.NODE_ENV === 'dev'
 
 const docs = () => ({
-  swagger: '2.0',
+  swagger: '2.0', // swagger 版本
 
+  // 說明區塊
   info: {
-    title: 'MetaWall APIs',
-    description: '這是 MetaWall API 的說明文件',
-    version: 'v1.0.0'
+    title: 'MetaWall APIs', // 標題
+    description: '這是 MetaWall API 的說明文件', // 說明
+    version: 'v1.0.0' // 版號
   },
 
-  host: isDev ? 'localhost:3000' : 'metawall-evo.herokuapp.com',
-  basePath: '/v1',
-  schemes: [isDev ? 'http' : 'https'],
-  consumes: ['application/json'],
+  host: isDev ? 'localhost:3000' : 'metawall-evo.herokuapp.com', // api url
+  basePath: '/v1', // API url 前輟
+  schemes: [isDev ? 'http' : 'https'], // 請求方式
+  consumes: ['application/json'], // 請求格式
 
+  // 請求路由
   paths: {
-    '/auth/login': {
-      post: {
+    // 驗證 token
+    '/auth/check_token': {
+      get: {
         tags: ['Auth'],
-        summary: '使用者登入',
-        description: '使用者登入 api 說明',
+        summary: 'Token 驗證',
+        description: '使用者 JWT  token 驗證',
+        parameters: [
+          {
+            in: 'header',
+            name: 'Authorization',
+            description: 'JWT Token',
+            required: true
+          }
+        ],
+        responses: {
+          200: {
+            description: 'OK'
+          },
+          403: {
+            description: 'Forbidden'
+          }
+        }
+      }
+    },
+
+    '/auth/login': { // 請求 router
+      post: { // 方法
+        tags: ['Auth'], // 分類
+        summary: '使用者登入', // 標題
+        description: '使用者登入 api 說明', // 說明
+        // 請求內容
         parameters: [
           {
             name: 'Body',
@@ -46,8 +74,37 @@ const docs = () => ({
           }
         }
       }
-    }
+    },
 
+    // 註冊
+    '/auth/register': {
+      post: {
+        tags: ['Auth'],
+        summary: '註冊',
+        description: '使用者註冊帳號',
+        parameters: [
+          {
+            name: 'Body',
+            in: 'body',
+            schema: {
+              $ref: '#/definitions/UserRegister'
+            },
+            required: true
+          }
+        ],
+        responses: {
+          201: {
+            description: '註冊成功',
+            schema: {
+              $ref: '#/definitions/UserRegisterSuccessData'
+            }
+          },
+          401: {
+            description: '註冊失敗'
+          }
+        }
+      }
+    }
   },
 
   // 建立 model schema
@@ -69,7 +126,7 @@ const docs = () => ({
       required: ['email', 'password']
     },
 
-    // 使用者登入成功資料
+    // [成功] 使用者登入資料
     UserLoginDataSuccess: {
       type: 'object',
       properties: {
@@ -123,6 +180,7 @@ const docs = () => ({
       }
     },
 
+    // [失敗] 使用者登入資料
     UserLoginDataFail: {
       type: 'object',
       properties: {
@@ -135,6 +193,54 @@ const docs = () => ({
           type: 'string',
           description: '響應信息',
           example: '電子信箱或密碼錯誤。'
+        }
+      }
+    },
+
+    // 使用者註冊資料
+    UserRegister: {
+      type: 'object',
+      properties: {
+        nickname: {
+          type: 'string',
+          description: '綽號'
+        },
+        email: {
+          type: 'string',
+          description: 'email'
+        },
+        password: {
+          type: 'string',
+          description: '密碼'
+        },
+        passwordConfirm: {
+          type: 'string',
+          description: '密碼確認'
+        }
+      },
+      required: ['nickname', 'email', 'password', 'passwordConfirm']
+    },
+
+    // 註冊成功
+    UserRegisterSuccessData: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'boolean'
+        },
+        message: {
+          type: 'string'
+        },
+        data: {
+          type: 'object',
+          properties: {
+            nickname: {
+              type: 'string'
+            },
+            email: {
+              type: 'string'
+            }
+          }
         }
       }
     }
