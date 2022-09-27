@@ -11,12 +11,37 @@ const docs = () => ({
   },
 
   host: isDev ? 'localhost:3000' : 'metawall-evo.herokuapp.com', // api url
-  basePath: '/v1', // 基礎路由
+  basePath: '/v1', // API url 前輟
   schemes: [isDev ? 'http' : 'https'], // 請求方式
   consumes: ['application/json'], // 請求格式
 
   // 請求路由
   paths: {
+    // 驗證 token
+    '/auth/check_token': {
+      get: {
+        tags: ['Auth'],
+        summary: 'Token 驗證',
+        description: '使用者 JWT  token 驗證',
+        parameters: [
+          {
+            in: 'header',
+            name: 'Authorization',
+            description: 'JWT Token',
+            required: true
+          }
+        ],
+        responses: {
+          200: {
+            description: 'OK'
+          },
+          403: {
+            description: 'Forbidden'
+          }
+        }
+      }
+    },
+
     '/auth/login': { // 請求 router
       post: { // 方法
         tags: ['Auth'], // 分類
@@ -49,8 +74,37 @@ const docs = () => ({
           }
         }
       }
-    }
+    },
 
+    // 註冊
+    '/auth/register': {
+      post: {
+        tags: ['Auth'],
+        summary: '註冊',
+        description: '使用者註冊帳號',
+        parameters: [
+          {
+            name: 'Body',
+            in: 'body',
+            schema: {
+              $ref: '#/definitions/UserRegister'
+            },
+            required: true
+          }
+        ],
+        responses: {
+          201: {
+            description: '註冊成功',
+            schema: {
+              $ref: '#/definitions/UserRegisterSuccessData'
+            }
+          },
+          401: {
+            description: '註冊失敗'
+          }
+        }
+      }
+    }
   },
 
   // 建立 model schema
@@ -139,6 +193,54 @@ const docs = () => ({
           type: 'string',
           description: '響應信息',
           example: '電子信箱或密碼錯誤。'
+        }
+      }
+    },
+
+    // 使用者註冊資料
+    UserRegister: {
+      type: 'object',
+      properties: {
+        nickname: {
+          type: 'string',
+          description: '綽號'
+        },
+        email: {
+          type: 'string',
+          description: 'email'
+        },
+        password: {
+          type: 'string',
+          description: '密碼'
+        },
+        passwordConfirm: {
+          type: 'string',
+          description: '密碼確認'
+        }
+      },
+      required: ['nickname', 'email', 'password', 'passwordConfirm']
+    },
+
+    // 註冊成功
+    UserRegisterSuccessData: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'boolean'
+        },
+        message: {
+          type: 'string'
+        },
+        data: {
+          type: 'object',
+          properties: {
+            nickname: {
+              type: 'string'
+            },
+            email: {
+              type: 'string'
+            }
+          }
         }
       }
     }
