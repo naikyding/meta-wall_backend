@@ -104,6 +104,57 @@ const docs = () => ({
           }
         }
       }
+    },
+
+    '/likes': {
+      get: {
+        tags: ['Likes'],
+        summary: '取得最愛列表',
+        parameters: [
+          {
+            name: 'Authorization',
+            description: 'JWT Token',
+            in: 'header'
+          }
+        ],
+        responses: {
+          200: {
+            description: '操作成功',
+            schema: {
+              $ref: '#/definitions/UserLikesList'
+            }
+          },
+          403: {
+            description: '驗證失敗，請重新登入'
+          }
+        }
+      },
+      post: {
+        tags: ['Likes'],
+        summary: '加入/移除 最愛',
+        parameters: [
+          {
+            in: 'header',
+            name: 'Authorization',
+            description: 'JWT Token'
+          },
+          {
+            in: 'body',
+            name: 'Body',
+            schema: {
+              $ref: '#/definitions/TogglerLikesItem'
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: '按讚成功 / 移除按讚'
+          },
+          400: {
+            description: '失敗'
+          }
+        }
+      }
     }
   },
 
@@ -241,6 +292,130 @@ const docs = () => ({
               type: 'string'
             }
           }
+        }
+      }
+    },
+
+    // 取得喜愛列表
+    UserLikesList: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'boolean',
+          description: '響應狀態'
+        },
+        message: {
+          type: 'string',
+          description: '響應信息'
+        },
+        data: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              _id: {
+                type: 'string',
+                description: '文章 id'
+              },
+              content: {
+                type: 'string',
+                description: '文章內容'
+              },
+              image: {
+                type: 'string',
+                description: '文章圖片'
+              },
+              user: {
+                type: 'object',
+                description: '發文者資料',
+                properties: {
+                  _id: {
+                    type: 'string',
+                    description: '發文者 id'
+                  },
+                  nickname: {
+                    type: 'string',
+                    description: '發文者綽號'
+                  },
+                  avatar: {
+                    type: 'string',
+                    description: '文章頭像'
+                  }
+                }
+              },
+              likes: {
+                type: 'array',
+                description: '文章喜愛者資料',
+                items: {
+                  type: 'string',
+                  description: '發文者 id'
+                }
+              },
+              createdAt: {
+                type: 'string',
+                description: '貼文時間'
+              },
+              comments: {
+                type: 'array',
+                description: '留言資料',
+                items: {
+                  type: 'object',
+                  properties: {
+                    _id: {
+                      type: 'string',
+                      description: '留言 id'
+                    },
+                    user: {
+                      type: 'object',
+                      properties: {
+                        _id: {
+                          type: 'string',
+                          description: '留言者 id'
+                        },
+                        nickname: {
+                          type: 'string',
+                          description: '留言者綽號'
+                        },
+                        avatar: {
+                          type: 'string',
+                          description: '留言者頭像'
+                        }
+                      }
+                    },
+                    post: {
+                      type: 'string',
+                      description: '留言文章 id'
+                    },
+                    content: {
+                      type: 'string',
+                      description: '留言內容'
+                    },
+                    createdAt: {
+                      type: 'string',
+                      description: '留言時間'
+                    },
+                    updatedAt: {
+                      type: 'string',
+                      description: '留言更新時間'
+                    }
+                  }
+                }
+              },
+              id: {
+                type: 'string',
+                description: '留言文章 id'
+              }
+            }
+          }
+        }
+      }
+    },
+
+    TogglerLikesItem: {
+      type: 'object',
+      properties: {
+        postId: {
+          type: 'string'
         }
       }
     }
