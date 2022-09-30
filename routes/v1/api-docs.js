@@ -155,6 +155,97 @@ const docs = () => ({
           }
         }
       }
+    },
+
+    '/user/': {
+      get: {
+        tags: ['User'],
+        summary: '取得使用者資料',
+        parameters: [
+          {
+            name: 'authorization',
+            in: 'header',
+            type: 'string'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'OK'
+          },
+          401: {
+            description: 'Token 無效'
+          }
+        }
+      },
+      patch: {
+        tags: ['User'],
+        summary: '修改使用者資料',
+        parameters: [
+          {
+            name: 'authorization',
+            in: 'header',
+            type: 'string'
+          },
+          {
+            in: 'formData',
+            name: 'avatar',
+            description: '頭像',
+            type: 'file'
+          },
+          {
+            in: 'formData',
+            name: 'nickname',
+            description: '暱稱',
+            type: 'string'
+          },
+          {
+            in: 'formData',
+            name: 'gender',
+            description: '性別',
+            type: 'string',
+            enum: ['male', 'female']
+          }
+        ],
+        responses: {
+          200: {
+            description: '修改成功'
+          },
+          400: {
+            description: '失敗'
+          },
+          403: {
+            description: '驗證失敗，請重新登入'
+          }
+        }
+      }
+    },
+    '/user/update_password': {
+      patch: {
+        tags: ['User'],
+        summary: '修改使用者密碼',
+        parameters: [
+          {
+            name: 'authorization',
+            in: 'header',
+            type: 'string'
+          },
+          {
+            name: 'Body',
+            in: 'body',
+            schema: {
+              $ref: '#/definitions/UserPasswordUpdate'
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: '密碼更新成功'
+          },
+          400: {
+            description: '修改失敗'
+          }
+        }
+      }
     }
   },
 
@@ -204,7 +295,7 @@ const docs = () => ({
                 },
                 nickname: {
                   type: 'string',
-                  description: '使用者綽號',
+                  description: '使用者暱稱',
                   example: 'Dev'
                 },
                 avatar: {
@@ -254,7 +345,7 @@ const docs = () => ({
       properties: {
         nickname: {
           type: 'string',
-          description: '綽號'
+          description: '暱稱'
         },
         email: {
           type: 'string',
@@ -335,7 +426,7 @@ const docs = () => ({
                   },
                   nickname: {
                     type: 'string',
-                    description: '發文者綽號'
+                    description: '發文者暱稱'
                   },
                   avatar: {
                     type: 'string',
@@ -374,7 +465,7 @@ const docs = () => ({
                         },
                         nickname: {
                           type: 'string',
-                          description: '留言者綽號'
+                          description: '留言者暱稱'
                         },
                         avatar: {
                           type: 'string',
@@ -418,6 +509,19 @@ const docs = () => ({
           type: 'string'
         }
       }
+    },
+
+    UserPasswordUpdate: {
+      type: 'object',
+      properties: {
+        password: {
+          type: 'string'
+        },
+        passwordConfirm: {
+          type: 'string'
+        }
+      },
+      required: ['password', 'passwordConfirm']
     }
   }
 })
