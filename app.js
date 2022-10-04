@@ -13,6 +13,7 @@ const swaggerApiDocs = require('./routes/v1/api-docs.js')
 const options = {
   customSiteTitle: 'MetaWall API Docs',
   customfavIcon: '/images/favicon.ico'
+
 }
 
 const indexRouter = require('./routes/index')
