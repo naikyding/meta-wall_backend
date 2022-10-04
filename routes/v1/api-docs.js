@@ -104,6 +104,148 @@ const docs = () => ({
           }
         }
       }
+    },
+
+    '/likes': {
+      get: {
+        tags: ['Likes'],
+        summary: '取得最愛列表',
+        parameters: [
+          {
+            name: 'Authorization',
+            description: 'JWT Token',
+            in: 'header'
+          }
+        ],
+        responses: {
+          200: {
+            description: '操作成功',
+            schema: {
+              $ref: '#/definitions/UserLikesList'
+            }
+          },
+          403: {
+            description: '驗證失敗，請重新登入'
+          }
+        }
+      },
+      post: {
+        tags: ['Likes'],
+        summary: '加入/移除 最愛',
+        parameters: [
+          {
+            in: 'header',
+            name: 'Authorization',
+            description: 'JWT Token'
+          },
+          {
+            in: 'body',
+            name: 'Body',
+            schema: {
+              $ref: '#/definitions/TogglerLikesItem'
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: '按讚成功 / 移除按讚'
+          },
+          400: {
+            description: '失敗'
+          }
+        }
+      }
+    },
+
+    '/user/': {
+      get: {
+        tags: ['User'],
+        summary: '取得使用者資料',
+        parameters: [
+          {
+            name: 'authorization',
+            in: 'header',
+            type: 'string'
+          }
+        ],
+        responses: {
+          200: {
+            description: 'OK'
+          },
+          401: {
+            description: 'Token 無效'
+          }
+        }
+      },
+      patch: {
+        tags: ['User'],
+        summary: '修改使用者資料',
+        parameters: [
+          {
+            name: 'authorization',
+            in: 'header',
+            type: 'string'
+          },
+          {
+            in: 'formData',
+            name: 'avatar',
+            description: '頭像',
+            type: 'file'
+          },
+          {
+            in: 'formData',
+            name: 'nickname',
+            description: '暱稱',
+            type: 'string'
+          },
+          {
+            in: 'formData',
+            name: 'gender',
+            description: '性別',
+            type: 'string',
+            enum: ['male', 'female']
+          }
+        ],
+        responses: {
+          200: {
+            description: '修改成功'
+          },
+          400: {
+            description: '失敗'
+          },
+          403: {
+            description: '驗證失敗，請重新登入'
+          }
+        }
+      }
+    },
+    '/user/update_password': {
+      patch: {
+        tags: ['User'],
+        summary: '修改使用者密碼',
+        parameters: [
+          {
+            name: 'authorization',
+            in: 'header',
+            type: 'string'
+          },
+          {
+            name: 'Body',
+            in: 'body',
+            schema: {
+              $ref: '#/definitions/UserPasswordUpdate'
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: '密碼更新成功'
+          },
+          400: {
+            description: '修改失敗'
+          }
+        }
+      }
     }
   },
 
@@ -153,7 +295,7 @@ const docs = () => ({
                 },
                 nickname: {
                   type: 'string',
-                  description: '使用者綽號',
+                  description: '使用者暱稱',
                   example: 'Dev'
                 },
                 avatar: {
@@ -203,7 +345,7 @@ const docs = () => ({
       properties: {
         nickname: {
           type: 'string',
-          description: '綽號'
+          description: '暱稱'
         },
         email: {
           type: 'string',
@@ -243,6 +385,143 @@ const docs = () => ({
           }
         }
       }
+    },
+
+    // 取得喜愛列表
+    UserLikesList: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'boolean',
+          description: '響應狀態'
+        },
+        message: {
+          type: 'string',
+          description: '響應信息'
+        },
+        data: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              _id: {
+                type: 'string',
+                description: '文章 id'
+              },
+              content: {
+                type: 'string',
+                description: '文章內容'
+              },
+              image: {
+                type: 'string',
+                description: '文章圖片'
+              },
+              user: {
+                type: 'object',
+                description: '發文者資料',
+                properties: {
+                  _id: {
+                    type: 'string',
+                    description: '發文者 id'
+                  },
+                  nickname: {
+                    type: 'string',
+                    description: '發文者暱稱'
+                  },
+                  avatar: {
+                    type: 'string',
+                    description: '文章頭像'
+                  }
+                }
+              },
+              likes: {
+                type: 'array',
+                description: '文章喜愛者資料',
+                items: {
+                  type: 'string',
+                  description: '發文者 id'
+                }
+              },
+              createdAt: {
+                type: 'string',
+                description: '貼文時間'
+              },
+              comments: {
+                type: 'array',
+                description: '留言資料',
+                items: {
+                  type: 'object',
+                  properties: {
+                    _id: {
+                      type: 'string',
+                      description: '留言 id'
+                    },
+                    user: {
+                      type: 'object',
+                      properties: {
+                        _id: {
+                          type: 'string',
+                          description: '留言者 id'
+                        },
+                        nickname: {
+                          type: 'string',
+                          description: '留言者暱稱'
+                        },
+                        avatar: {
+                          type: 'string',
+                          description: '留言者頭像'
+                        }
+                      }
+                    },
+                    post: {
+                      type: 'string',
+                      description: '留言文章 id'
+                    },
+                    content: {
+                      type: 'string',
+                      description: '留言內容'
+                    },
+                    createdAt: {
+                      type: 'string',
+                      description: '留言時間'
+                    },
+                    updatedAt: {
+                      type: 'string',
+                      description: '留言更新時間'
+                    }
+                  }
+                }
+              },
+              id: {
+                type: 'string',
+                description: '留言文章 id'
+              }
+            }
+          }
+        }
+      }
+    },
+
+    TogglerLikesItem: {
+      type: 'object',
+      properties: {
+        postId: {
+          type: 'string'
+        }
+      }
+    },
+
+    UserPasswordUpdate: {
+      type: 'object',
+      properties: {
+        password: {
+          type: 'string'
+        },
+        passwordConfirm: {
+          type: 'string'
+        }
+      },
+      required: ['password', 'passwordConfirm']
     }
   }
 })
