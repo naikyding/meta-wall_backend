@@ -246,6 +246,61 @@ const docs = () => ({
           }
         }
       }
+    },
+
+    '/follows/': {
+      get: {
+        tags: ['Follows'],
+        summary: '取得 (個人) 追蹤名單',
+        parameters: [
+          {
+            name: 'authorization',
+            in: 'header',
+            type: 'string',
+            required: true
+          }
+        ],
+        responses: {
+          200: {
+            description: '操作成功',
+            schema: {
+              $ref: '#/definitions/UserFollowsData'
+            }
+          },
+          401: {
+            description: 'Token 無效'
+          }
+        }
+      },
+      post: {
+        tags: ['Follows'],
+        summary: '追蹤使用者 toggle',
+        parameters: [
+          {
+            name: 'authorization',
+            required: true,
+            in: 'header',
+            type: 'string'
+          },
+          {
+            name: '追蹤者 id',
+            required: true,
+            in: 'body',
+            type: 'object',
+            schema: {
+              $ref: '#/definitions/FollowerData'
+            }
+          }
+        ],
+        responses: {
+          200: {
+            description: 'OK'
+          },
+          400: {
+            description: '失敗'
+          }
+        }
+      }
     }
   },
 
@@ -264,7 +319,7 @@ const docs = () => ({
           type: 'string'
         }
       },
-      // 必頁項目
+      // 必填項目
       required: ['email', 'password']
     },
 
@@ -522,6 +577,67 @@ const docs = () => ({
         }
       },
       required: ['password', 'passwordConfirm']
+    },
+
+    UserFollowsData: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'boolean'
+        },
+        message: {
+          type: 'string'
+        },
+        data: {
+          type: 'object',
+          properties: {
+            follows: {
+              type: 'array',
+              items: {
+                type: 'object',
+                properties: {
+                  userId: {
+                    type: 'object',
+                    description: '追蹤者資料',
+                    properties: {
+                      _id: {
+                        type: 'string',
+                        description: '追蹤者 id'
+                      },
+                      nickname: {
+                        type: 'string',
+                        description: '追蹤者眶稱'
+                      },
+                      avatar: {
+                        type: 'string',
+                        description: '追蹤者頭像'
+                      }
+                    }
+                  },
+                  _id: {
+                    type: 'string',
+                    description: '追蹤項目 id'
+                  },
+                  createdAt: {
+                    type: 'string',
+                    description: '追蹤時間'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    FollowerData: {
+      type: 'object',
+      properties: {
+        followUserId: {
+          description: '追蹤者 id',
+          type: 'string'
+        }
+      }
     }
   }
 })

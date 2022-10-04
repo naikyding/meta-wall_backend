@@ -91,7 +91,6 @@ const forgotPassword = async (req, res, next) => {
   const payload = { _id: user._id, email: user.email }
   const secret = process.env.JWT_SECRET + user.password
   const newToken = generatorToken(payload, '15m', secret)
-
   const redirectUrl = `${process.env.APP_DOMAIN}reset-password/${user._id}/${newToken}`
 
   await mail(email, user.nickname, redirectUrl)
